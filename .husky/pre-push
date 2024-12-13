@@ -1,0 +1,13 @@
+#!/bin/sh
+branch=$(git symbolic-ref --short HEAD)
+
+# Autoriser uniquement les branches commençant par feature/, bugfix/, ou hotfix/
+if ! echo "$branch" | grep -qE "^(feature/|bugfix/|hotfix/)"; then
+  echo "❌ Pushes are only allowed on feature/, bugfix/, or hotfix/ branches."
+  echo "Your current branch is '$branch'."
+  echo "Please push from a valid branch."
+  exit 1
+fi
+
+# Si la branche est valide, continuez avec le push
+echo "✅ Branch '$branch' is valid. Proceeding with push..."
