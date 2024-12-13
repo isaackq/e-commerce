@@ -7,7 +7,7 @@ export type User = {
 };
 
 export class RegistrationUserUseCase {
-  user: User | string = 'aaaa';
+  user: User | null = null;
   execute(registrationCommand: User) {
     this.user = registrationCommand;
   }
