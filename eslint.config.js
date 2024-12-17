@@ -67,7 +67,6 @@ export default [
         },
       ],
       'import/newline-after-import': 'error',
-      quotes: ['error', 'single'],
       // Prettier Rules
       'prettier/prettier': ['error', { singleQuote: true }],
 
@@ -78,7 +77,7 @@ export default [
       //'jsdoc/require-jsdoc': 'error',
 
       // SonarJS Rules
-      'sonarjs/no-duplicate-string': 'warn',
+      'sonarjs/no-duplicate-string': 'error',
       'sonarjs/cognitive-complexity': ['error', 5],
       'sonarjs/no-all-duplicated-branches': 'error',
       'sonarjs/prefer-object-literal': 'error',
