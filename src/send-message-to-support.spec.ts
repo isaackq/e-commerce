@@ -1,6 +1,6 @@
+import type { Message } from '@domain/entities/Message';
 import { describe, expect, test } from '@jest/globals';
 
-import type { Message } from './application/usecase/send-message-to-support.usecase';
 import { SendMessageToSupportUseCase } from './application/usecase/send-message-to-support.usecase';
 
 describe('Feature: Send message To Support', () => {

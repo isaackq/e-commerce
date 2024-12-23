@@ -1,7 +1,4 @@
-export type Message = {
-  title: string;
-  subject: string;
-};
+import type { Message } from '@domain/entities/Message';
 
 export class SendMessageToSupportUseCase {
   message: Message | null = null;
