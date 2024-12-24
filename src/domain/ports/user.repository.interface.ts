@@ -1,6 +1,6 @@
 import type { User } from '@domain/entities/User';
 
 export interface UserRepositoryInterface {
-  save(registrationCommand: User): User;
+  save(user: User): User;
   findOne(): User;
 }

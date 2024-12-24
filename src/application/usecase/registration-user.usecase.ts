@@ -1,19 +1,21 @@
-import type { User } from '@domain/entities/User';
-import type { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
+import { UserDto } from '@application/dtos/user.dto';
+import { User } from '@domain/entities/User';
+import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
+import { Inject, Injectable } from '@nestjs/common';
 
-export class RequiredError extends Error {}
-export class EmailError extends Error {}
-
+@Injectable()
 export class RegistrationUserUseCase {
-  constructor(private readonly userRepository: UserRepositoryInterface) {}
+  constructor(@Inject('UserRepositoryInterface') private readonly userRepository: UserRepositoryInterface) {}
 
-  execute(registrationCommand: User) {
-    if (registrationCommand.firstname.length === 0) {
-      throw new RequiredError();
-    }
-    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(registrationCommand.email)) {
-      throw new EmailError();
-    }
-    this.userRepository.save(registrationCommand);
+  execute(userDto: UserDto): User {
+    const user = new User(
+      userDto.firstname,
+      userDto.lastname,
+      userDto.email,
+      userDto.birthday,
+      userDto.mobileNumber
+    )
+    
+    return this.userRepository.save(user);
   }
 }

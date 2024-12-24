@@ -1,20 +1,26 @@
 {
-    "compilerOptions": {
-      "target": "ES2020",
-      "module": "ESNext",
-      "moduleResolution": "Node",
-      "strict": true,
-      "esModuleInterop": true,
-      "forceConsistentCasingInFileNames": true,
-      "skipLibCheck": true,
-      "resolveJsonModule": true,
-      "baseUrl": "./",
-      "paths": {
-        "@domain/*": ["src/domain/*"],
-        "@application/*": ["src/application/*"],
-        "@infrastructure/*": ["src/infrastructure/*"],
-      }
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@domain/*": ["src/domain/*"],
+      "@application/*": ["src/application/*"],
+      "@infrastructure/*": ["src/infrastructure/*"],
     },
-    "include": ["src/**/*.ts", "tests/**/*.ts"],
-    "exclude": ["node_modules", "dist"]
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
   }
+}

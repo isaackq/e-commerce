@@ -1,13 +1,15 @@
-import type { User } from '@domain/entities/User';
+import { User } from '@domain/entities/User';
 import type { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
+import { Injectable } from '@nestjs/common';
 
-export class InMemoryUserRepository implements UserRepositoryInterface {
+@Injectable()
+export class InMemoryUserRepository implements UserRepositoryInterface {  
   users: User[] = [];
 
-  save(registrationCommand: User): User {
-    this.users.push(registrationCommand);
-
-    return registrationCommand;
+  save(user: User): User {
+    this.users.push(user);
+    
+    return user;
   }
 
   findOne(): User {
