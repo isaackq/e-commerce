@@ -14,14 +14,12 @@ describe('Feature: Send message To Support', () => {
 
   describe('Scenario: Successfuly send message', () => {
     test('Role: As a user, I can sent message to support on the platform', () => {
-      fixture.whenMessageToSupport({
+      const messageData = {
         title: 'Name',
         subject: 'Hazem Hazem',
-      });
-      fixture.thenMessageToSupport({
-        title: 'Name',
-        subject: 'Hazem Hazem',
-      });
+      };
+      fixture.whenMessageToSupport(messageData);
+      fixture.thenMessageToSupport(messageData);
     });
   });
 
