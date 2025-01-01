@@ -1,11 +1,18 @@
-export type Message = {
-  title: string;
-  subject: string;
-};
+import type { Message } from '@domain/entities/Message';
+import type { MessageRepositoryInterface } from '@domain/ports/message.repository.interface';
+
+export class RequiredError extends Error {}
 
 export class SendMessageToSupportUseCase {
-  message: Message | null = null;
+  constructor(private readonly messageRepository: MessageRepositoryInterface) {}
+
   execute(messageToSupportCommand: Message) {
-    this.message = messageToSupportCommand;
+    if (
+      messageToSupportCommand.title.length === 0 ||
+      messageToSupportCommand.subject.length === 0
+    ) {
+      throw new RequiredError();
+    }
+    this.messageRepository.save(messageToSupportCommand);
   }
 }
