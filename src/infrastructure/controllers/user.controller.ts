@@ -8,9 +8,10 @@ export class UserController {
 
   @Post('/users')
   @Header('Content-Type', 'application/json')
-  registration(@Body(new ValidationPipe()) userDto: UserDto): string {
-
-    const user = this.registrationUsecase.execute(userDto);
+  async registration(
+    @Body(new ValidationPipe()) userDto: UserDto,
+  ): Promise<string> {
+    const user = await this.registrationUsecase.execute(userDto);
 
     return JSON.stringify(user);
   }

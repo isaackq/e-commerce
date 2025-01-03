@@ -16,3 +16,6 @@ RUN npm run build
 
 # Expose the API port
 EXPOSE 3000
+
+# Lancer l'application en mode développement
+CMD ["npm", "run", "start:dev"]

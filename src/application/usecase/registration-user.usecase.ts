@@ -5,17 +5,21 @@ import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RegistrationUserUseCase {
-  constructor(@Inject('UserRepositoryInterface') private readonly userRepository: UserRepositoryInterface) {}
+  constructor(
+    @Inject('UserRepository')
+    private readonly userRepository: UserRepositoryInterface,
+  ) {}
 
-  execute(userDto: UserDto): User {
+  async execute(userDto: UserDto): Promise<User> {
+    // Hydrate the user entity from DTO
     const user = new User(
       userDto.firstname,
       userDto.lastname,
       userDto.email,
       userDto.birthday,
-      userDto.mobileNumber
-    )
-    
-    return this.userRepository.save(user);
+      userDto.mobileNumber,
+    );
+
+    return await this.userRepository.save(user);
   }
 }
