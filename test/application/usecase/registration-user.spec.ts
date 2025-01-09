@@ -55,8 +55,8 @@ describe('Feature: User Registration', () => {
 
 function createFixture() {
   let throwError: Error;
-  let inMemoryUserGateway = new InMemoryUserRepository();
-  let registrationUserUseCase: RegistrationUserUseCase =
+  const inMemoryUserGateway = new InMemoryUserRepository();
+  const registrationUserUseCase: RegistrationUserUseCase =
     new RegistrationUserUseCase(inMemoryUserGateway);
 
   return {

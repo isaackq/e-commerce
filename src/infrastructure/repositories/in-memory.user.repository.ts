@@ -3,12 +3,12 @@ import type { UserRepositoryInterface } from '@domain/ports/user.repository.inte
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class InMemoryUserRepository implements UserRepositoryInterface {  
+export class InMemoryUserRepository implements UserRepositoryInterface {
   users: User[] = [];
 
-  save(user: User): User {
+  async save(user: User): Promise<User> {
     this.users.push(user);
-    
+
     return user;
   }
 
