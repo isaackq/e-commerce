@@ -15,18 +15,15 @@ export class UserRepository implements UserRepositoryInterface {
   ) {}
 
   async save(user: User): Promise<User> {
-    const createdUser = await this.userModel.create(user);
+    const createdUser = await this.userModel.create({
+      ...user,
+      birthday: user.birthday.value,
+    });
 
-    return new User(
-      createdUser._id.toString(),
-      createdUser.firstname,
-      createdUser.lastname,
-      createdUser.email,
-      createdUser.birthday,
-      createdUser.mobileNumber,
-    );
+    user.id = createdUser._id.toString();
+
+    return user;
   }
 
-  findOne(): User {
-  }
+  findOne(): void {}
 }

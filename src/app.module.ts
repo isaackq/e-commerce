@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { UserModule } from '@infrastructure/modules/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -11,6 +12,19 @@ import { MongooseModule } from '@nestjs/mongoose';
       },
     ),
     UserModule,
+  ],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        transform: true,
+        transformOptions: {
+          enableImplicitConversion: true,
+        },
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    },
   ],
 })
 export class AppModule {}

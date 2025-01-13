@@ -1,3 +1,4 @@
+import { UserTransformer } from '@application/transformer/user.transformer';
 import { RegistrationUserUseCase } from '@application/usecase/registration-user.usecase';
 import { UserController } from '@infrastructure/controllers/user.controller';
 import { UserRepository } from '@infrastructure/repositories/user.repository';
@@ -13,6 +14,7 @@ import { Connection } from 'mongoose';
   controllers: [UserController],
   providers: [
     RegistrationUserUseCase,
+    UserTransformer,
     Connection,
     {
       provide: 'UserRepository',
