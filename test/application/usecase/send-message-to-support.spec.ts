@@ -1,5 +1,4 @@
 import {
-  RequiredError,
   SendMessageToSupportUseCase,
 } from '@application/usecase/send-message-to-support.usecase';
 import type { Message } from '@domain/entities/Message';
@@ -16,7 +15,7 @@ describe('Feature: Send message To Support', () => {
     test('Role: As a user, I can sent message to support on the platform', () => {
       const messageData = {
         title: 'Name',
-        subject: 'Hazem Hazem',
+        content: 'Hazem Hazem',
       };
       fixture.whenMessageToSupport(messageData);
       fixture.thenMessageToSupport(messageData);
@@ -24,12 +23,12 @@ describe('Feature: Send message To Support', () => {
   });
 
   describe('Scenario: Prevent user send message with empty ', () => {
-    test('Role: As a user, I cannot register with empty tilte or subject or both ', () => {
+    test('Role: As a user, I cannot register with empty tilte or content or both ', () => {
       fixture.whenMessageToSupport({
         title: '',
-        subject: '',
+        content: '',
       });
-      fixture.thenUserConnotSendMessageToSupport(RequiredError);
+      fixture.thenUserConnotSendMessageToSupport(Error);
     });
   });
 });

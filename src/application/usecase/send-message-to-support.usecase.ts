@@ -1,18 +1,18 @@
-import type { Message } from '@domain/entities/Message';
+import { MessageDto } from '@application/dtos/message.dto';
+import { Message } from '@domain/entities/Message';
 import type { MessageRepositoryInterface } from '@domain/ports/message.repository.interface';
+import { Inject, Injectable } from '@nestjs/common';
 
-export class RequiredError extends Error {}
-
+@Injectable()
 export class SendMessageToSupportUseCase {
-  constructor(private readonly messageRepository: MessageRepositoryInterface) {}
+  constructor(
+    @Inject('MessageRepository')
+    private readonly messageRepository: MessageRepositoryInterface,
+  ) { }
 
-  execute(messageToSupportCommand: Message) {
-    if (
-      messageToSupportCommand.title.length === 0 ||
-      messageToSupportCommand.subject.length === 0
-    ) {
-      throw new RequiredError();
-    }
-    this.messageRepository.save(messageToSupportCommand);
+  async execute(messageDto: MessageDto): Promise<Message> {
+    const message = new Message(messageDto.title, messageDto.content);
+
+    return await this.messageRepository.save(message);
   }
 }
