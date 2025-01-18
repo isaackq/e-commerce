@@ -1,6 +1,6 @@
 import { MessageDto } from "@application/dtos/message.dto";
 import { SendMessageToSupportUseCase } from "@application/usecase/send-message-to-support.usecase";
-import { Body, Controller, Header, Post, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Header, Post, ValidationPipe } from "@nestjs/common";
 
 @Controller()
 export class MessageController {
@@ -16,4 +16,9 @@ export class MessageController {
     return JSON.stringify(message)
   }
 
+  @Get('/message')
+  getMessage() {
+    return 'Hello World'
+  }
+  
 }

@@ -2,6 +2,7 @@ import { Module, ValidationPipe } from '@nestjs/common';
 import { UserModule } from '@infrastructure/modules/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_PIPE } from '@nestjs/core';
+import { MessageModule } from '@infrastructure/modules/message.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { APP_PIPE } from '@nestjs/core';
       },
     ),
     UserModule,
+    MessageModule,
   ],
   providers: [
     {

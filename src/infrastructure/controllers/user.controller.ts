@@ -1,6 +1,6 @@
 import { UserDto } from '@application/dtos/user.dto';
 import { RegistrationUserUseCase } from '@application/usecase/registration-user.usecase';
-import { Body, Controller, Header, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Header, Post, ValidationPipe } from '@nestjs/common';
 
 @Controller()
 export class UserController {
@@ -14,5 +14,9 @@ export class UserController {
     const user = await this.registrationUsecase.execute(userDto);
 
     return JSON.stringify(user);
+  }
+  @Get('/users')
+  getUsers(): string {
+    return 'Get all users';
   }
 }

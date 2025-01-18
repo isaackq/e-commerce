@@ -5,6 +5,7 @@ import { Message,MessageSchema } from '@infrastructure/schemas/message.schema';
 import { SendMessageToSupportUseCase } from '@application/usecase/send-message-to-support.usecase';
 import { Connection } from 'mongoose';
 import { MessageRepository } from '@infrastructure/repositories/message.repository';
+import { MessageTranformer } from '@application/transformer/message.transformer';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { MessageRepository } from '@infrastructure/repositories/message.reposito
   controllers: [MessageController],
   providers: [
     SendMessageToSupportUseCase,
+    MessageTranformer,
     Connection,
     {
       provide: 'MessageRepository',

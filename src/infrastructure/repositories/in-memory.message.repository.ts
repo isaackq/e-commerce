@@ -3,11 +3,17 @@ import type { MessageRepositoryInterface } from '@domain/ports/message.repositor
 
 export class InMemoryMessageRepository implements MessageRepositoryInterface {
   messages: Message[] = [];
-  save(registrationCommand: Message): Message {
+  async save(registrationCommand: Message): Promise<Message> {
     this.messages.push(registrationCommand);
     return registrationCommand;
   }
-  findOne(): Message {
+  
+  async findOne(id: string): Promise<Message | undefined> {
+    let message =  this.messages.find((message) => message.id === id);
+    if (!message) {
+      throw new Error('Message not found');
+    } 
+
     return this.messages[0];
   }
 }

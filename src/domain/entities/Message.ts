@@ -1,6 +1,5 @@
 export class Message {
-  constructor(
-    public title: string,
-    public content: string,
-  ) { }
+  public id?: string;
+  public title: string;
+  public content: string;
 }

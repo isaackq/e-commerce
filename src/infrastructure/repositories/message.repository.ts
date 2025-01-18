@@ -11,13 +11,17 @@ export class MessageRepository implements MessageRepositoryInterface {
     @InjectModel('Message') private messageModel: Model<MessageDocument>,
   ) { }
   async save(message: Message): Promise<Message> {
-    const message = await this.messageModel.create(message);
-    return new Message(
-      message._id.toString(),
-      message.title,
-      message.content,
-    )
+    const createdMessage = await this.messageModel.create({
+      ...message,
+    });
+
+    message.id = createdMessage._id.toString();
+
+    return message;
   }
+
+
+
 
   async findOne(id: string): Promise<Message | null> {
     const messageModel = await this.messageModel.findById(id).exec();
@@ -25,10 +29,7 @@ export class MessageRepository implements MessageRepositoryInterface {
       return null;
     }
 
-    return new Message(
-      messageModel.title,
-      messageModel.content,
-    );
+    return messageModel
   }
 }
 
