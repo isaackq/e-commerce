@@ -21,5 +21,6 @@ import { Connection } from 'mongoose';
       useClass: UserRepository,
     },
   ],
+  exports: [{ provide: 'UserRepository', useClass: UserRepository }],
 })
 export class UserModule {}

@@ -15,4 +15,8 @@ export class InMemoryUserRepository implements UserRepositoryInterface {
   findOne(): User {
     return this.users[0];
   }
+
+  async findMany(ids: string[]): Promise<Array<User>> {
+    return this.users;
+  }
 }

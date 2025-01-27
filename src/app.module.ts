@@ -3,6 +3,7 @@ import { UserModule } from '@infrastructure/modules/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_PIPE } from '@nestjs/core';
 import { MessageModule } from '@infrastructure/modules/message.module';
+import { MeetingModule } from '@infrastructure/modules/meeting.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { MessageModule } from '@infrastructure/modules/message.module';
     ),
     UserModule,
     MessageModule,
+    MeetingModule,
   ],
   providers: [
     {
