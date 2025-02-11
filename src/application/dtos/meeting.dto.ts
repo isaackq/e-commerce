@@ -1,12 +1,5 @@
 import { Type } from 'class-transformer';
-import {
-  ArrayMinSize,
-  IsArray,
-  IsDate,
-  IsNotEmpty,
-  IsString,
-  IsUrl,
-} from 'class-validator';
+import { ArrayMinSize, IsArray, IsDate, IsNotEmpty, IsString, IsUrl } from 'class-validator';
 
 export class MeetingDto {
   @IsString()
@@ -36,14 +29,7 @@ export class MeetingDto {
   @IsString()
   public description: string | null;
 
-  constructor(
-    link: string,
-    project: string,
-    members: string[],
-    startDate: Date,
-    endDate: Date,
-    description: string,
-  ) {
+  constructor(link: string, project: string, members: string[], startDate: Date, endDate: Date, description: string) {
     this.link = link;
     this.project = project;
     this.members = members;

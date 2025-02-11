@@ -1,5 +1,5 @@
-import { UserDto } from '@application/dtos/user.dto';
-import { UserTransformer } from '@application/transformer/user.transformer';
+import { UserDto } from '@application/user/dtos/user.dto';
+import { UserTransformer } from '@application/user/transformers/user.transformer';
 import { User } from '@domain/entities/User';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Inject, Injectable } from '@nestjs/common';

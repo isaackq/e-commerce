@@ -1,6 +1,4 @@
-import {
-  SendMessageToSupportUseCase,
-} from '@application/usecase/send-message-to-support.usecase';
+import { SendMessageToSupportUseCase } from '@application/usecase/send-message-to-support.usecase';
 import type { Message } from '@domain/entities/Message';
 import { InMemoryMessageRepository } from '@infrastructure/repositories/in-memory.message.repository';
 import { beforeEach, describe, expect, test } from '@jest/globals';
@@ -36,10 +34,11 @@ describe('Feature: Send message To Support', () => {
 function createFixture() {
   let throwError: Error;
 
-  let inMemoryMessageRepository = new InMemoryMessageRepository();
+  const inMemoryMessageRepository = new InMemoryMessageRepository();
 
-  let mssageToSupportUseCase: SendMessageToSupportUseCase =
-    new SendMessageToSupportUseCase(inMemoryMessageRepository);
+  const mssageToSupportUseCase: SendMessageToSupportUseCase = new SendMessageToSupportUseCase(
+    inMemoryMessageRepository,
+  );
 
   return {
     whenMessageToSupport(messageToSupportCommand: Message) {

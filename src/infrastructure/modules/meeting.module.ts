@@ -9,10 +9,7 @@ import { Connection } from 'mongoose';
 import { UserModule } from './user.module';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Meeting.name, schema: MeetingSchema }]),
-    UserModule,
-  ],
+  imports: [MongooseModule.forFeature([{ name: Meeting.name, schema: MeetingSchema }]), UserModule],
   controllers: [MeetingController],
   providers: [
     CreateMeetingUsecase,

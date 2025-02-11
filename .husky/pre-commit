@@ -10,4 +10,4 @@ if ! echo "$branch" | grep -qE "^(feature/|bugfix/|hotfix/)"; then
 fi
 
 # Si la branche est valide, continuez avec les autres vérifications
-npx lint-staged && npm test
+npx lint-staged

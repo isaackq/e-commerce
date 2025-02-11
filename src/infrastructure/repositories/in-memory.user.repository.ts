@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { User } from '@domain/entities/User';
-import type { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
+import type { UserCriteria, UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -12,11 +13,29 @@ export class InMemoryUserRepository implements UserRepositoryInterface {
     return user;
   }
 
-  findOne(): User {
-    return this.users[0];
+  findOne(id: string): Promise<User | null> {
+    return new Promise((resolve) => {
+      const user = this.users.find((user) => user.id === id);
+      if (user) {
+        resolve(user);
+      } else {
+        resolve(null);
+      }
+    });
   }
 
-  async findMany(ids: string[]): Promise<Array<User>> {
+  findOneByEmail(email: string): Promise<User | null> {
+    return new Promise((resolve) => {
+      const user = this.users.find((user) => user.email === email);
+      if (user) {
+        resolve(user);
+      } else {
+        resolve(null);
+      }
+    });
+  }
+
+  async findMany(criteria?: Partial<UserCriteria>): Promise<Array<User>> {
     return this.users;
   }
 }

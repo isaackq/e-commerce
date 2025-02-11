@@ -2,7 +2,7 @@ import {
   EmailError,
   RegistrationUserUseCase,
   RequiredError,
-} from '@application/usecase/registration-user.usecase';
+} from '@application/user/usecase/registration-user.usecase';
 import type { User } from '@domain/entities/User';
 import { InMemoryUserRepository } from '@infrastructure/repositories/in-memory.user.repository';
 import { beforeEach, describe, expect, test } from '@jest/globals';
@@ -56,8 +56,7 @@ describe('Feature: User Registration', () => {
 function createFixture() {
   let throwError: Error;
   const inMemoryUserGateway = new InMemoryUserRepository();
-  const registrationUserUseCase: RegistrationUserUseCase =
-    new RegistrationUserUseCase(inMemoryUserGateway);
+  const registrationUserUseCase: RegistrationUserUseCase = new RegistrationUserUseCase(inMemoryUserGateway);
 
   return {
     whenRegistrationUser(registrationCommand: User) {

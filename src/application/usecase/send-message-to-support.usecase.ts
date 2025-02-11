@@ -10,7 +10,7 @@ export class SendMessageToSupportUseCase {
     @Inject('MessageRepository')
     private readonly messageRepository: MessageRepositoryInterface,
     private readonly messageTransformer: MessageTranformer,
-  ) { }
+  ) {}
 
   async execute(messageDto: MessageDto): Promise<Message> {
     // const message = new Message(messageDto.title, messageDto.content);

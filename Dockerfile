@@ -1,12 +1,14 @@
 # API Dockerfile
 FROM node:22.12-alpine
 
+RUN apk add --no-cache make gcc g++ python3 libc6-compat
+
 # Set working directory
 WORKDIR /www
 
 # Copy package.json and install dependencies
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --include=optional
 
 # Copy the rest of the app
 COPY . .

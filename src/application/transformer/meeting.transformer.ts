@@ -16,7 +16,7 @@ export class MeetingTransformer {
 
     meeting.link = meetingDto.link;
     meeting.project = new Project(); // get project by id
-    meeting.members = await this.userRepository.findMany(meetingDto.members); //get members by ids
+    meeting.members = await this.userRepository.findMany({ ids: meetingDto.members }); //get members by ids
     if (meeting.members.length !== meetingDto.members.length) {
       throw new BadRequestException('Unvalid user id list');
     }
