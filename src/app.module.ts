@@ -4,7 +4,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { MessageModule } from '@infrastructure/modules/message.module';
 import { MeetingModule } from '@infrastructure/modules/meeting.module';
+<<<<<<< HEAD
 import { TokenGuard } from '@application/user/guards/token.guard';
+=======
+import { FollowUpModule } from '@infrastructure/modules/follow-up.module';
+>>>>>>> 2397fac (follow-up-usecase)
 
 @Module({
   imports: [
@@ -14,6 +18,7 @@ import { TokenGuard } from '@application/user/guards/token.guard';
     UserModule,
     MessageModule,
     MeetingModule,
+    FollowUpModule,
   ],
   providers: [
     {
