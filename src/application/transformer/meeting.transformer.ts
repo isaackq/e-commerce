@@ -1,4 +1,4 @@
-import { MeetingDto } from '@application/dtos/meeting.dto';
+import { MeetingDto } from '@application/dtos/request/meeting.dto';
 import { Meeting } from '@domain/entities/Meeting';
 import { Project } from '@domain/entities/Project';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';

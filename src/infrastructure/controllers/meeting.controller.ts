@@ -1,4 +1,4 @@
-import { MeetingDto } from '@application/dtos/meeting.dto';
+import { MeetingDto } from '@application/dtos/request/meeting.dto';
 import { CreateMeetingUsecase } from '@application/usecase/create-meeting.usecase';
 import { Body, Controller, Get, Header, Post, ValidationPipe } from '@nestjs/common';
 

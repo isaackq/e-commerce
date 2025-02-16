@@ -1,3 +1,5 @@
+import { Paginator } from '@application/dtos/response/paginator.dto';
+import { GetUsersPresenterInterface } from '@application/ports/get-users.presenter.interface';
 import { User } from '@domain/entities/User';
 import { Roles } from '@domain/enums/roles.enum';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
@@ -8,14 +10,18 @@ export class GetUsersUseCase {
   constructor(
     @Inject('UserRepository')
     private readonly userRepository: UserRepositoryInterface,
+    @Inject('GetUsersPresenter')
+    private readonly getUsersPresenter: GetUsersPresenterInterface,
   ) {}
 
-  async execute(userRole: Roles): Promise<User[]> {
+  async execute(page: number, limit: number, userRole: Roles): Promise<Paginator<Partial<User>>> {
     const criteria = {};
     if (userRole === Roles.MANAGER) {
       criteria['roles'] = [Roles.EMPLOYEE, Roles.MANAGER];
     }
 
-    return await this.userRepository.findMany(criteria);
+    const paginator = await this.userRepository.getPerPage(page, limit, criteria);
+
+    return this.getUsersPresenter.present(paginator);
   }
 }

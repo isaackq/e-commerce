@@ -1,4 +1,4 @@
-import { MessageDto } from '@application/dtos/message.dto';
+import { MessageDto } from '@application/dtos/request/message.dto';
 import { MessageTranformer } from '@application/transformer/message.transformer';
 import { Message } from '@domain/entities/Message';
 import type { MessageRepositoryInterface } from '@domain/ports/message.repository.interface';

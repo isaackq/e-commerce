@@ -1,4 +1,4 @@
-import { MeetingDto } from '@application/dtos/meeting.dto';
+import { MeetingDto } from '@application/dtos/request/meeting.dto';
 import { MeetingTransformer } from '@application/transformer/meeting.transformer';
 import { Meeting } from '@domain/entities/Meeting';
 import { MeetingRepositoryInterface } from '@domain/ports/meeting.repository.interface';

@@ -1,4 +1,4 @@
-import { MessageDto } from '@application/dtos/message.dto';
+import { MessageDto } from '@application/dtos/request/message.dto';
 import { Message } from '@domain/entities/Message';
 import { Injectable } from '@nestjs/common';
 
