@@ -1,7 +1,7 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document, HydratedDocument, model } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, HydratedDocument, model } from 'mongoose';
 
-export type FollowUpDocument = HydratedDocument<FollowUp>
+export type FollowUpDocument = HydratedDocument<FollowUp>;
 
 @Schema()
 export class FollowUp extends Document {

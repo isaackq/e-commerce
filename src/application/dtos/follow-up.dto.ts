@@ -16,12 +16,7 @@ export class FollowUpDto {
   @IsString()
   public attachment: string | null;
 
-  constructor(
-    project: number,
-    employee: number,
-    subject: string,
-    attachment: string | null,
-  ) {
+  constructor(project: number, employee: number, subject: string, attachment: string | null) {
     this.project = project;
     this.employee = employee;
     this.subject = subject;

@@ -7,18 +7,7 @@ import { GetUsersUseCase } from '@application/user/usecase/get-users.usecase';
 import { RegistrationUserUseCase } from '@application/user/usecase/registration-user.usecase';
 import { User } from '@domain/entities/User';
 import { Roles as RolesEnum } from '@domain/enums/roles.enum';
-import {
-  Body,
-  Controller,
-  DefaultValuePipe,
-  Get,
-  Header,
-  HttpStatus,
-  ParseIntPipe,
-  Post,
-  Query,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpStatus, Post, Query, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')
