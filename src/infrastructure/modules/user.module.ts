@@ -5,7 +5,6 @@ import { RefreshTokenUseCase } from '@application/user/usecase/refresh-token.use
 import { RegistrationUserUseCase } from '@application/user/usecase/registration-user.usecase';
 import { AuthController } from '@infrastructure/controllers/auth.controller';
 import { UserController } from '@infrastructure/controllers/user.controller';
-import { GetUsersPresenter } from '@infrastructure/presenters/GetUsersPresenter';
 import { BcryptHashingProvider } from '@infrastructure/providers/bcrypt.hashing.provider';
 import { JwtTokenGenerator } from '@infrastructure/providers/jwt.token-generator.provider';
 import { UserRepository } from '@infrastructure/repositories/user.repository';
@@ -35,10 +34,6 @@ import { Connection } from 'mongoose';
     {
       provide: 'UserRepository',
       useClass: UserRepository,
-    },
-    {
-      provide: 'GetUsersPresenter',
-      useClass: GetUsersPresenter,
     },
     {
       provide: 'HashingProvider',

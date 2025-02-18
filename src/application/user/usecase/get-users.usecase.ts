@@ -1,27 +1,29 @@
-import { Paginator } from '@application/dtos/response/paginator.dto';
-import { GetUsersPresenterInterface } from '@application/ports/get-users.presenter.interface';
-import { User } from '@domain/entities/User';
-import { Roles } from '@domain/enums/roles.enum';
+import { RolesEnum } from '@domain/enums/roles.enum';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
+import { UserResponseDto } from '../dtos/response/user.response.dto';
+import { PaginatorResponseDto } from '@application/dtos/response/paginator.response.dto';
 
 @Injectable()
 export class GetUsersUseCase {
   constructor(
     @Inject('UserRepository')
     private readonly userRepository: UserRepositoryInterface,
-    @Inject('GetUsersPresenter')
-    private readonly getUsersPresenter: GetUsersPresenterInterface,
   ) {}
 
-  async execute(page: number, limit: number, userRole: Roles): Promise<Paginator<Partial<User>>> {
+  async execute(page: number, limit: number, userRole: RolesEnum): Promise<PaginatorResponseDto<UserResponseDto>> {
     const criteria = {};
-    if (userRole === Roles.MANAGER) {
-      criteria['roles'] = [Roles.EMPLOYEE, Roles.MANAGER];
+    if (userRole === RolesEnum.MANAGER) {
+      criteria['roles'] = [RolesEnum.EMPLOYEE, RolesEnum.MANAGER];
     }
 
-    const paginator = await this.userRepository.getPerPage(page, limit, criteria);
+    const users = this.userRepository.findMany(criteria, page, limit);
 
-    return this.getUsersPresenter.present(paginator);
+    return new PaginatorResponseDto(
+      page,
+      await this.userRepository.count(criteria),
+      limit,
+      (await users).map((user) => UserResponseDto.createFromEntity(user)),
+    );
   }
 }

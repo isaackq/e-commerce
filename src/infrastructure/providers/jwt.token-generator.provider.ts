@@ -1,4 +1,4 @@
-import { Token } from '@application/user/interfaces/token.interface';
+import { Token } from '@application/user/dtos/response/token.dto';
 import { TokenGeneratorInterfece } from '@application/user/providers/token-generator.interface';
 import { User } from '@domain/entities/User';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';

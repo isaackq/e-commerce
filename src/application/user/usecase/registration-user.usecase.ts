@@ -1,8 +1,8 @@
-import { UserDto } from '@application/user/dtos/user.dto';
 import { UserTransformer } from '@application/user/transformers/user.transformer';
-import { User } from '@domain/entities/User';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
+import { UserResponseDto } from '../dtos/response/user.response.dto';
+import { UserRequestDto } from '../dtos/request/user.request.dto';
 
 @Injectable()
 export class RegistrationUserUseCase {
@@ -12,9 +12,9 @@ export class RegistrationUserUseCase {
     private readonly userTransformer: UserTransformer,
   ) {}
 
-  async execute(userDto: UserDto): Promise<User> {
-    const user = this.userTransformer.toEntity(userDto);
+  async execute(userRequestDto: UserRequestDto): Promise<UserResponseDto> {
+    const user = this.userTransformer.toEntity(userRequestDto);
 
-    return await this.userRepository.save(user);
+    return UserResponseDto.createFromEntity(await this.userRepository.save(user));
   }
 }

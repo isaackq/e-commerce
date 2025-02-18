@@ -10,16 +10,10 @@ export class Birthday {
 
   private isAgeValid(date: Date): boolean {
     const today = new Date();
-    const age = today.getFullYear() - date.getFullYear();
-    const monthDiff = today.getMonth() - date.getMonth();
-    const dayDiff = today.getDate() - date.getDate();
+    const minDate = new Date(today);
+    minDate.setFullYear(today.getFullYear() - 16);
 
-    // Adjust age if the birthday hasn't occurred yet this year
-    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-      return age - 1 > 16;
-    }
-
-    return age > 16;
+    return date <= minDate;
   }
 
   get value(): Date {

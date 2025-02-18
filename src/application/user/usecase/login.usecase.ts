@@ -1,9 +1,9 @@
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { SignInDto } from '../dtos/sign-in.dto';
+import { SignInDto } from '../dtos/request/sign-in.dto';
 import { HashingProviderInterface } from '../providers/hashing.provider.interface';
 import { TokenGeneratorInterfece } from '../providers/token-generator.interface';
-import { Token } from '../interfaces/token.interface';
+import { Token } from '../dtos/response/token.dto';
 
 @Injectable()
 export class LoginUseCase {

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Paginator } from '@application/dtos/response/paginator.dto';
 import { User } from '@domain/entities/User';
 import type { UserCriteria, UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Injectable } from '@nestjs/common';
@@ -12,6 +11,10 @@ export class InMemoryUserRepository implements UserRepositoryInterface {
     this.users.push(user);
 
     return user;
+  }
+
+  async count(criteria?: Partial<UserCriteria>): Promise<number> {
+    return this.users.length;
   }
 
   findOne(id: string): Promise<User | null> {
@@ -36,13 +39,7 @@ export class InMemoryUserRepository implements UserRepositoryInterface {
     });
   }
 
-  async findMany(criteria?: Partial<UserCriteria>): Promise<Array<User>> {
+  async findMany(criteria?: Partial<UserCriteria>): Promise<User[]> {
     return this.users;
-  }
-
-  getPerPage(page: number, itemPerPage: number, criteria?: Partial<UserCriteria>): Promise<Paginator<User>> {
-    return new Promise((resolve) => {
-      resolve(new Paginator(1, 100, 10, this.users));
-    });
   }
 }

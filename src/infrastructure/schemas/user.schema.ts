@@ -1,4 +1,4 @@
-import { Roles } from '@domain/enums/roles.enum';
+import { RolesEnum } from '@domain/enums/roles.enum';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, HydratedDocument, model } from 'mongoose';
 
@@ -44,10 +44,10 @@ export class User extends Document {
   mobileNumber: string;
 
   @Prop({
-    enum: Roles,
+    enum: RolesEnum,
     isRequired: true,
   })
-  role: Roles;
+  role: RolesEnum;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

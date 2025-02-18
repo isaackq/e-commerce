@@ -1,13 +1,13 @@
-import { MessageDto } from '@application/dtos/request/message.dto';
+import { MessageRequestDto } from '@application/message/dtos/request/message.request.dto';
 import { Message } from '@domain/entities/Message';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class MessageTranformer {
-  toEntity(messageDto: MessageDto): Message {
+  toEntity(messageRequestDto: MessageRequestDto): Message {
     const message = new Message();
-    message.title = messageDto.title;
-    message.content = messageDto.content;
+    message.title = messageRequestDto.title;
+    message.content = messageRequestDto.content;
 
     return message;
   }

@@ -1,5 +1,5 @@
 import { User } from '@domain/entities/User';
-import { Token } from '../interfaces/token.interface';
+import { Token } from '../dtos/response/token.dto';
 
 export interface TokenGeneratorInterfece {
   generateTokens(user: User): Promise<Token>;

@@ -6,6 +6,7 @@ import { MessageModule } from '@infrastructure/modules/message.module';
 import { MeetingModule } from '@infrastructure/modules/meeting.module';
 import { TokenGuard } from '@application/user/guards/token.guard';
 import { FollowUpModule } from '@infrastructure/modules/follow-up.module';
+import { RatingModule } from '@infrastructure/modules/rating.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { FollowUpModule } from '@infrastructure/modules/follow-up.module';
     MessageModule,
     MeetingModule,
     FollowUpModule,
+    RatingModule,
   ],
   providers: [
     {

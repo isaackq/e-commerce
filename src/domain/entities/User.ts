@@ -1,4 +1,4 @@
-import { Roles } from '@domain/enums/roles.enum';
+import { RolesEnum } from '@domain/enums/roles.enum';
 import { Birthday } from '@domain/objectsValues/Birthday';
 
 export class User {
@@ -9,5 +9,5 @@ export class User {
   public password: string;
   public birthday: Birthday;
   public mobileNumber: string;
-  public role: Roles;
+  public role: RolesEnum;
 }

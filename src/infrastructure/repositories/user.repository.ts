@@ -1,8 +1,7 @@
-import { Paginator } from '@application/dtos/response/paginator.dto';
 import { HashingProviderInterface } from '@application/user/providers/hashing.provider.interface';
 import { User } from '@domain/entities/User';
-import { Birthday } from '@domain/objectsValues/Birthday';
 import type { UserCriteria, UserRepositoryInterface } from '@domain/ports/user.repository.interface';
+import { UserMapper } from '@infrastructure/mappers/user.mapper';
 import { UserDocument, User as UserSchema } from '@infrastructure/schemas/user.schema';
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -30,13 +29,13 @@ export class UserRepository implements UserRepositoryInterface {
 
     const password = await this.hashingProvider.hash(user.password);
 
-    const createdUser = await this.userModel.create({
+    const userDocument = await this.userModel.create({
       ...user,
       birthday: user.birthday.value,
       password: password,
     });
 
-    return this.make(createdUser);
+    return UserMapper.map(userDocument);
   }
 
   async findOne(id: string): Promise<User | null> {
@@ -46,7 +45,7 @@ export class UserRepository implements UserRepositoryInterface {
       return null;
     }
 
-    return this.make(userDocument);
+    return UserMapper.map(userDocument);
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
@@ -56,10 +55,32 @@ export class UserRepository implements UserRepositoryInterface {
       return null;
     }
 
-    return this.make(userDocument);
+    return UserMapper.map(userDocument);
   }
 
-  async getPerPage(page: number, limit: number, criteria?: Partial<UserCriteria>): Promise<Paginator<User>> {
+  async findMany(criteria?: Partial<UserCriteria>, page?: number, limit?: number): Promise<User[]> {
+    const params = this.buildParams(criteria);
+
+    const query = this.userModel.find(params);
+    if (page && limit) {
+      query.limit(limit).skip((page - 1) * limit);
+    }
+    const userDocuments = await query.exec();
+
+    if (!userDocuments || userDocuments.length === 0) {
+      return [];
+    }
+
+    return userDocuments.map((userDocument) => UserMapper.map(userDocument));
+  }
+
+  async count(criteria?: Partial<UserCriteria>): Promise<number> {
+    const params = this.buildParams(criteria);
+
+    return await this.userModel.find(params).countDocuments(params);
+  }
+
+  private buildParams(criteria?: Partial<UserCriteria>) {
     const params = {};
 
     if (criteria !== undefined) {
@@ -74,52 +95,6 @@ export class UserRepository implements UserRepositoryInterface {
       }
     }
 
-    const userDocuments = await this.userModel
-      .find(params)
-      .limit(limit)
-      .skip((page - 1) * limit)
-      .exec();
-
-    const count = await this.userModel.find(params).countDocuments(params);
-
-    const users: User[] = userDocuments.map((doc) => this.make(doc));
-
-    return new Paginator<User>(page, count, limit, users);
-  }
-
-  async findMany(criteria?: Partial<UserCriteria>): Promise<User[]> {
-    const params = {};
-
-    if (criteria !== undefined) {
-      const { ids, role } = criteria;
-
-      if (ids) {
-        params['_id'] = { $in: ids };
-      }
-
-      if (role) {
-        params['role'] = { role: role };
-      }
-    }
-
-    const userDocuments = await this.userModel.find(params).exec();
-
-    const users: User[] = userDocuments.map((doc) => this.make(doc));
-
-    return users;
-  }
-
-  private make(userDocument: UserDocument): User {
-    const user = new User();
-    user.id = userDocument._id.toString();
-    user.firstname = userDocument.firstname;
-    user.lastname = userDocument.lastname;
-    user.email = userDocument.email;
-    user.password = userDocument.password;
-    user.birthday = new Birthday(userDocument.birthday);
-    user.mobileNumber = userDocument.mobileNumber;
-    user.role = userDocument.role;
-
-    return user;
+    return params;
   }
 }

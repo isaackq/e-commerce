@@ -1,9 +1,9 @@
 import { IsString, IsEmail, IsDate, IsMobilePhone, IsNotEmpty, IsStrongPassword, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Roles } from '@domain/enums/roles.enum';
+import { RolesEnum } from '@domain/enums/roles.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserDto {
+export class UserRequestDto {
   @ApiProperty({
     example: 'Hazem',
     description: 'The firstname of the User',
@@ -73,10 +73,10 @@ export class UserDto {
     example: 'employee',
     description: 'The role of the User',
     required: false,
-    enum: [Roles.EMPLOYEE, Roles.MANAGER],
+    enum: [RolesEnum.EMPLOYEE, RolesEnum.MANAGER],
   })
-  @IsEnum(Roles)
-  public role: Roles;
+  @IsEnum(RolesEnum)
+  public role: RolesEnum;
 
   constructor(firstname: string, lastname: string, email: string, birthday: Date | null, mobileNumber: string | null) {
     this.firstname = firstname;

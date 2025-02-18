@@ -1,19 +1,19 @@
-import { UserDto } from '@application/user/dtos/user.dto';
+import { UserRequestDto } from '@application/user/dtos/request/user.request.dto';
 import { User } from '@domain/entities/User';
 import { Birthday } from '@domain/objectsValues/Birthday';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserTransformer {
-  toEntity(userDto: UserDto): User {
+  toEntity(userRequestDto: UserRequestDto): User {
     const user = new User();
-    user.firstname = userDto.firstname;
-    user.lastname = userDto.lastname;
-    user.email = userDto.email;
-    user.password = userDto.password;
-    user.birthday = new Birthday(userDto.birthday);
-    user.mobileNumber = userDto.mobileNumber;
-    user.role = userDto.role;
+    user.firstname = userRequestDto.firstname;
+    user.lastname = userRequestDto.lastname;
+    user.email = userRequestDto.email;
+    user.password = userRequestDto.password;
+    user.birthday = new Birthday(userRequestDto.birthday);
+    user.mobileNumber = userRequestDto.mobileNumber;
+    user.role = userRequestDto.role;
 
     return user;
   }

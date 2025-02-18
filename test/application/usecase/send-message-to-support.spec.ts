@@ -1,4 +1,4 @@
-import { SendMessageToSupportUseCase } from '@application/usecase/send-message-to-support.usecase';
+import { SendMessageToSupportUseCase } from '@application/message/usecase/send-message-to-support.usecase';
 import type { Message } from '@domain/entities/Message';
 import { InMemoryMessageRepository } from '@infrastructure/repositories/in-memory.message.repository';
 import { beforeEach, describe, expect, test } from '@jest/globals';
