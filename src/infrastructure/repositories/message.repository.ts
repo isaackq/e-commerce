@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class MessageRepository implements MessageRepositoryInterface {
-  constructor(@InjectModel('Message') private messageModel: Model<MessageDocument>) {}
+  constructor(@InjectModel('Message') private readonly messageModel: Model<MessageDocument>) {}
   async save(message: Message): Promise<Message> {
     const messageDocument = await this.messageModel.create({
       ...message,
@@ -19,14 +19,14 @@ export class MessageRepository implements MessageRepositoryInterface {
     return MessageMapper.map(await messageDocument.populate('sentBy'));
   }
 
-  async findOne(id: string, createdBy?: User): Promise<Message | null> {
-    const params = { _id: id };
-    if (createdBy) {
-      params['sentBy'] = createdBy.id;
+  async findOne(id: string, sentBy?: User): Promise<Message | null> {
+    const messageDocument = await await this.messageModel.findById(id).exec();
+
+    if (!messageDocument) {
+      return null;
     }
 
-    const messageDocument = await await this.messageModel.findOne(params).populate('sentBy').exec();
-    if (!messageDocument) {
+    if (sentBy && messageDocument.sentBy.toString() !== sentBy.id) {
       return null;
     }
 

@@ -8,18 +8,17 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user.module';
 import { User, UserSchema } from '@infrastructure/schemas/user.schema';
-import { Project, ProjectSchema } from '@infrastructure/schemas/project.schema';
-import { ProjectRepository } from '@infrastructure/repositories/project.repository';
 import { GetEmployeeRatingsUsecase } from '@application/rating/usecase/get-employee-ratings.usecase';
+import { ProjectModule } from './project.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Rating.name, schema: RatingSchema },
       { name: User.name, schema: UserSchema },
-      { name: Project.name, schema: ProjectSchema },
     ]),
     UserModule,
+    ProjectModule,
   ],
   controllers: [RatingController],
   providers: [
@@ -30,10 +29,6 @@ import { GetEmployeeRatingsUsecase } from '@application/rating/usecase/get-emplo
     {
       provide: 'RatingRepository',
       useClass: RatingRepository,
-    },
-    {
-      provide: 'projectRepository',
-      useClass: ProjectRepository,
     },
   ],
 })

@@ -20,4 +20,4 @@ export class Message extends Document {
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);
-export const MessageModel = model('Message', MessageSchema);
+export const MessageModel = model(Message.name, MessageSchema);

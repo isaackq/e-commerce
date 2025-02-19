@@ -3,5 +3,5 @@ import { User } from '@domain/entities/User';
 
 export interface MessageRepositoryInterface {
   save(message: Message): Promise<Message>;
-  findOne(id: string, createdBy?: User): Promise<Message | null>;
+  findOne(id: string, sentBy?: User): Promise<Message | null>;
 }

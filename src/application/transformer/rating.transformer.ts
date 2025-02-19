@@ -9,7 +9,7 @@ export class RatingTransformer {
   constructor(
     @Inject('UserRepository')
     private readonly userRepository: UserRepositoryInterface,
-    @Inject('projectRepository')
+    @Inject('ProjectRepository')
     private readonly projectRepository: ProjectRepositoryInterface,
   ) {}
 

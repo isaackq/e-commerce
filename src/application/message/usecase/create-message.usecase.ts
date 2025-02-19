@@ -1,8 +1,8 @@
-import { MessageRequestDto } from '@application/message/dtos/request/message.request.dto';
 import { MessageTranformer } from '@application/transformer/message.transformer';
 import { User } from '@domain/entities/User';
 import type { MessageRepositoryInterface } from '@domain/ports/message.repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
+import { MessageRequestDto } from '../dtos/request/message.request.dto';
 import { MessageResponseDto } from '../dtos/response/message.response.dto';
 
 @Injectable()

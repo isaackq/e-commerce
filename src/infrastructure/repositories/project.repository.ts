@@ -13,6 +13,16 @@ export class ProjectRepository implements ProjectRepositoryInterface {
     private projectModel: Model<ProjectDocument>,
   ) {}
 
+  async save(project: Project): Promise<Project> {
+    const projectDocument = await this.projectModel.create({
+      ...project,
+      createdBy: project.createdBy.id,
+      positions: project.positions?.map((position) => position.id),
+    });
+
+    return ProjectMapper.map(await projectDocument.populate('positions createdBy'));
+  }
+
   async findOne(id: string): Promise<Project | null> {
     const projectDocument = await this.projectModel.findById(id).exec();
 

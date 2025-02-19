@@ -12,7 +12,7 @@ import { ProjectRepositoryInterface } from '@domain/ports/project.repository.int
 @Injectable()
 export class ProjectManagerGuard implements CanActivate {
   constructor(
-    @Inject('projectRepository')
+    @Inject('ProjectRepository')
     private readonly projectRepository: ProjectRepositoryInterface,
   ) {}
 

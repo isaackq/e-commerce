@@ -1,6 +1,6 @@
 import { MessageRequestDto } from '@application/message/dtos/request/message.request.dto';
 import { ObjectIdValidationPipe } from '@application/pipes/object-id-validation.pipe';
-import { CreateMessageUseCase } from '@application/message/usecase/send-message-to-support.usecase';
+import { CreateMessageUseCase } from '@application/message/usecase/create-message.usecase';
 import { Body, Controller, Get, Header, HttpException, HttpStatus, Param, Post, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetMessageUseCase } from '@application/message/usecase/get-message.usecase';

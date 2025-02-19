@@ -7,6 +7,7 @@ import { MeetingModule } from '@infrastructure/modules/meeting.module';
 import { TokenGuard } from '@application/user/guards/token.guard';
 import { FollowUpModule } from '@infrastructure/modules/follow-up.module';
 import { RatingModule } from '@infrastructure/modules/rating.module';
+import { ProjectModule } from '@infrastructure/modules/project.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { RatingModule } from '@infrastructure/modules/rating.module';
     MeetingModule,
     FollowUpModule,
     RatingModule,
+    ProjectModule,
   ],
   providers: [
     {
