@@ -1,7 +1,6 @@
 import { Type } from 'class-transformer';
-import { ArrayMinSize, IsArray, IsDate, IsNotEmpty, IsString, IsUrl, Validate } from 'class-validator';
+import { IsArray, IsDate, IsMongoId, IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsObjectId } from '@application/validation/is-object-id.validation';
 
 export class ProjectRequestDto {
   @ApiProperty({ description: 'The title of the project', example: 'AWS Migration' })
@@ -30,11 +29,11 @@ export class ProjectRequestDto {
     description: 'List of position IDs',
     example: ['dev123', 'lead456'],
     type: [String],
-    minItems: 2,
   })
   @IsArray()
-  @Validate(IsObjectId, { each: true, message: 'Each value in positionsIds must be a valid ObjectId' })
-  public positionsIds: string[];
+  @IsOptional()
+  @IsMongoId({ each: true })
+  public positionsIds?: string[] = null;
 
   constructor(title: string, document: string, startedAt: Date, endedAt: Date, positionsIds: string[]) {
     this.title = title;

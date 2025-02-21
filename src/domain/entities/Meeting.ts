@@ -5,8 +5,9 @@ export class Meeting {
   public id?: string;
   public link: string;
   public project: Project;
-  public members: User[];
+  public createdBy: User;
+  public participants: User[];
   public startDate: Date;
-  public endDate: Date;
-  public description: string;
+  public duration: number;
+  public description?: string;
 }

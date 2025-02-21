@@ -1,5 +1,4 @@
-import { IsObjectId } from '@application/validation/is-object-id.validation';
-import { IsNotEmpty, IsNumber, Validate } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RatingRequestDto {
@@ -8,7 +7,7 @@ export class RatingRequestDto {
     type: String,
     example: '65c1b7f5d4f1a4567890abcd',
   })
-  @Validate(IsObjectId)
+  @IsMongoId()
   @IsNotEmpty()
   projectId: string;
 
@@ -17,7 +16,7 @@ export class RatingRequestDto {
     type: String,
     example: '65c1b8f5d4f1a4567890efgh',
   })
-  @Validate(IsObjectId)
+  @IsMongoId()
   @IsNotEmpty()
   employeeId: string;
 

@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserResponseDto } from '@application/user/dtos/response/user.response.dto';
 import { Position } from '@domain/entities/Position';
 import { Project } from '@domain/entities/Project';
+import { User } from '@domain/entities/User';
 
 export class ProjectResponseDto {
   @ApiProperty({ example: '123e4567e89b', description: 'Unique identifier of the project' })
@@ -39,7 +40,9 @@ export class ProjectResponseDto {
     const projectResponseDto = new ProjectResponseDto();
     projectResponseDto.id = project.id;
     projectResponseDto.title = project.title;
-    projectResponseDto.createdBy = UserResponseDto.createFromEntity(project.createdBy);
+    if (project.createdBy instanceof User) {
+      projectResponseDto.createdBy = UserResponseDto.createFromEntity(project.createdBy);
+    }
     projectResponseDto.document = project.document;
     projectResponseDto.startedAt = project.startedAt;
     projectResponseDto.endedAt = project.endedAt;

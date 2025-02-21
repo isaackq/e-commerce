@@ -4,14 +4,21 @@ import { Project } from '@domain/entities/Project';
 import { User } from '@domain/entities/User';
 
 export class RatingMapper {
-  static map(ratingDocument: RatingDocument): Rating {
+  static map(ratingDocument: RatingDocument | string): Rating {
+    const rating = new Rating();
+    if (typeof ratingDocument === 'string') {
+      rating.id = ratingDocument;
+
+      return rating;
+    }
+
     const project = new Project();
     project.id = ratingDocument.project.toString();
 
     const employee = new User();
     employee.id = ratingDocument.employee.toString();
 
-    const rating = new Rating();
+    
     rating.project = project;
     rating.employee = employee;
     rating.value = ratingDocument.value;

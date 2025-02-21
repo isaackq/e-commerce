@@ -3,7 +3,7 @@ import { User } from '@domain/entities/User';
 import type { UserCriteria, UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { UserMapper } from '@infrastructure/mappers/user.mapper';
 import { UserDocument, User as UserSchema } from '@infrastructure/schemas/user.schema';
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -38,21 +38,21 @@ export class UserRepository implements UserRepositoryInterface {
     return UserMapper.map(userDocument);
   }
 
-  async findOne(id: string): Promise<User | null> {
+  async findOne(id: string): Promise<User> {
     const userDocument = await this.userModel.findById(id).exec();
 
     if (!userDocument) {
-      return null;
+      throw new NotFoundException('Invalid user id');
     }
 
     return UserMapper.map(userDocument);
   }
 
-  async findOneByEmail(email: string): Promise<User | null> {
+  async findOneByEmail(email: string): Promise<User> {
     const userDocument = await this.userModel.findOne({ email: email });
 
     if (!userDocument) {
-      return null;
+      throw new NotFoundException('Invalid user email');
     }
 
     return UserMapper.map(userDocument);
@@ -84,14 +84,14 @@ export class UserRepository implements UserRepositoryInterface {
     const params = {};
 
     if (criteria !== undefined) {
-      const { ids, role } = criteria;
+      const { ids, roles } = criteria;
 
       if (ids) {
         params['_id'] = { $in: ids };
       }
 
-      if (role) {
-        params['role'] = { role: role };
+      if (roles) {
+        params['role'] = { $in: roles };
       }
     }
 

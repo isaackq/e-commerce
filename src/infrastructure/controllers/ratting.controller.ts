@@ -29,7 +29,6 @@ export class RatingController {
   @UseGuards(ProjectManagerGuard)
   @Put('/ratings')
   async editRating(@Body() ratingRequestDto: RatingRequestDto): Promise<void> {
-    await this.editRatingUsecase.execute(ratingRequestDto);
     try {
       await this.editRatingUsecase.execute(ratingRequestDto);
     } catch (error) {

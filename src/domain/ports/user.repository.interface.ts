@@ -3,7 +3,7 @@ import { RolesEnum } from '@domain/enums/roles.enum';
 
 export type UserCriteria = {
   ids: string[];
-  role: RolesEnum;
+  roles: RolesEnum[];
 };
 
 export interface UserRepositoryInterface {

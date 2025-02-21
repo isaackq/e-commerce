@@ -3,8 +3,14 @@ import { User } from '@domain/entities/User';
 import { Birthday } from '@domain/objectsValues/Birthday';
 
 export class UserMapper {
-  static map(userDocument: UserDocument): User {
+  static map(userDocument: UserDocument | string): User {
     const user = new User();
+    if (typeof userDocument === 'string') {
+      user.id = userDocument;
+
+      return user;
+    }
+
     user.id = userDocument.id;
     user.password = userDocument.password;
     user.firstname = userDocument.firstname;

@@ -12,7 +12,7 @@ export class ProjectTransformer {
     project.document = projectRequestDto.document;
     project.startedAt = projectRequestDto.startedAt;
     project.endedAt = projectRequestDto.endedAt;
-    if (projectRequestDto.positionsIds.length > 0) {
+    if (projectRequestDto.positionsIds?.length > 0) {
       const positions = await this.positionRepository.findByIds(projectRequestDto.positionsIds);
       if (positions.length !== projectRequestDto.positionsIds.length) {
         throw new BadRequestException('One or many positions ids not found');

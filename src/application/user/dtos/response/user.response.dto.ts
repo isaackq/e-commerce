@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@domain/entities/User';
+import { Birthday } from '@domain/objectsValues/Birthday';
 
 export class UserResponseDto {
   @ApiProperty({
@@ -75,7 +76,10 @@ export class UserResponseDto {
 
   public static createFromEntity(user: User): UserResponseDto {
     const userResponse = new UserResponseDto();
-    userResponse.birthday = user.birthday.value;
+    userResponse.id = user.id;
+    if (user.birthday instanceof Birthday) {
+      userResponse.birthday = user.birthday.value;
+    }
     userResponse.email = user.email;
     userResponse.firstname = user.firstname;
     userResponse.lastname = user.lastname;
