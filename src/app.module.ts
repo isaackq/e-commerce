@@ -8,6 +8,7 @@ import { TokenGuard } from '@application/user/guards/token.guard';
 import { FollowUpModule } from '@infrastructure/modules/follow-up.module';
 import { RatingModule } from '@infrastructure/modules/rating.module';
 import { ProjectModule } from '@infrastructure/modules/project.module';
+import { PositiontModule } from '@infrastructure/modules/position.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ProjectModule } from '@infrastructure/modules/project.module';
     FollowUpModule,
     RatingModule,
     ProjectModule,
+    PositiontModule,
   ],
   providers: [
     {

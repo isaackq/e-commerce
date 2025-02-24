@@ -1,20 +1,13 @@
 import { ProjectTransformer } from '@application/project/transformer/project.transformer';
 import { CreateProjectUsecase } from '@application/project/usecase/create-project.usecase';
-import { Position } from '@domain/entities/Position';
 import { ProjectController } from '@infrastructure/controllers/project.controller';
 import { ProjectRepository } from '@infrastructure/repositories/project.repository';
-import { PositionSchema } from '@infrastructure/schemas/position.schema';
 import { Project, ProjectSchema } from '@infrastructure/schemas/project.schema';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: Project.name, schema: ProjectSchema },
-      { name: Position.name, schema: PositionSchema },
-    ]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Project.name, schema: ProjectSchema }])],
   controllers: [ProjectController],
   providers: [
     CreateProjectUsecase,
