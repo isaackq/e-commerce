@@ -10,17 +10,25 @@ import { JwtTokenGenerator } from '@infrastructure/providers/jwt.token-generator
 import { UserRepository } from '@infrastructure/repositories/user.repository';
 import { User, UserSchema } from '@infrastructure/schemas/user.schema';
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import jwtConfig from 'config/jwt.config';
 import { Connection } from 'mongoose';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    JwtModule.register({
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          secret: configService.get('jwtConfig.secret'),
+          signOptions: configService.get('jwtConfig.signOptions'),
+        };
+      },
       global: true,
-      secret: 'csqdcsdcqsdcqsdcsdc',
-      signOptions: { expiresIn: '60s' },
     }),
   ],
   controllers: [UserController, AuthController],

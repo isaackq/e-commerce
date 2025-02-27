@@ -3,7 +3,9 @@ import { TokenGeneratorInterfece } from '@application/user/providers/token-gener
 import { User } from '@domain/entities/User';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import jwtConfig from 'config/jwt.config';
 
 @Injectable()
 export class JwtTokenGenerator implements TokenGeneratorInterfece {
@@ -11,11 +13,13 @@ export class JwtTokenGenerator implements TokenGeneratorInterfece {
     private jwtService: JwtService,
     @Inject('UserRepository')
     private readonly userRepository: UserRepositoryInterface,
+    @Inject(jwtConfig.KEY)
+    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
   public async generateTokens(user: User): Promise<Token> {
     const [accessToken, refreshToken] = await Promise.all([
-      await this.generateToken(user.id, 3600, { email: user.email, role: user.role }),
-      await this.generateToken(user.id, 86400),
+      await this.generateToken(user.id, this.jwtConfiguration.accessTokenTtl, { email: user.email, role: user.role }),
+      await this.generateToken(user.id, this.jwtConfiguration.refreshTokenTtl),
     ]);
 
     return {
@@ -31,7 +35,7 @@ export class JwtTokenGenerator implements TokenGeneratorInterfece {
       const user = await this.userRepository.findOne(sub);
 
       return {
-        accessToken: await this.generateToken(user.id, 3600, {
+        accessToken: await this.generateToken(user.id, this.jwtConfiguration.accessTokenTtl, {
           email: user.email,
           role: user.role,
         }),

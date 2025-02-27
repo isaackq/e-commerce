@@ -9,11 +9,28 @@ import { FollowUpModule } from '@infrastructure/modules/follow-up.module';
 import { RatingModule } from '@infrastructure/modules/rating.module';
 import { ProjectModule } from '@infrastructure/modules/project.module';
 import { PositiontModule } from '@infrastructure/modules/position.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import databaseConfig from 'config/database.config';
+import appConfig from 'config/app.config';
+
+const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://root:root@staff-system-db:27017/staff_system', {
-      authSource: 'admin',
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+      load: [databaseConfig, appConfig],
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory(configService: ConfigService) {
+        return {
+          uri: configService.get('database.uri'),
+          authSource: configService.get('database.authSource'),
+        };
+      },
     }),
     UserModule,
     MessageModule,
