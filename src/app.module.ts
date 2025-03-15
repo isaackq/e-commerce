@@ -1,10 +1,10 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { Global, Module, ValidationPipe } from '@nestjs/common';
 import { UserModule } from '@infrastructure/modules/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE, DiscoveryService } from '@nestjs/core';
 import { MessageModule } from '@infrastructure/modules/message.module';
 import { MeetingModule } from '@infrastructure/modules/meeting.module';
-import { TokenGuard } from '@application/user/guards/token.guard';
+import { TokenGuard } from '@infrastructure/guards/token.guard';
 import { FollowUpModule } from '@infrastructure/modules/follow-up.module';
 import { RatingModule } from '@infrastructure/modules/rating.module';
 import { ProjectModule } from '@infrastructure/modules/project.module';
@@ -12,9 +12,11 @@ import { PositiontModule } from '@infrastructure/modules/position.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from 'config/database.config';
 import appConfig from 'config/app.config';
+import { RepositoryLocator } from '@infrastructure/locators/repository.locator';
 
 const ENV = process.env.NODE_ENV;
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -41,6 +43,7 @@ const ENV = process.env.NODE_ENV;
     PositiontModule,
   ],
   providers: [
+    DiscoveryService,
     {
       provide: APP_GUARD,
       useClass: TokenGuard,
@@ -56,6 +59,8 @@ const ENV = process.env.NODE_ENV;
         forbidNonWhitelisted: true,
       }),
     },
+    RepositoryLocator,
   ],
+  exports: [RepositoryLocator],
 })
 export class AppModule {}

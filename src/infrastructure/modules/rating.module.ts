@@ -31,5 +31,11 @@ import { ProjectModule } from './project.module';
       useClass: RatingRepository,
     },
   ],
+  exports: [
+    {
+      provide: 'RatingRepository',
+      useClass: RatingRepository,
+    },
+  ],
 })
 export class RatingModule {}

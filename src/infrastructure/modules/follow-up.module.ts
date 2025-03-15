@@ -19,5 +19,11 @@ import { Connection } from 'mongoose';
       useClass: FollowUpRepository,
     },
   ],
+  exports: [
+    {
+      provide: 'FollowUpRepository',
+      useClass: FollowUpRepository,
+    },
+  ],
 })
 export class FollowUpModule {}

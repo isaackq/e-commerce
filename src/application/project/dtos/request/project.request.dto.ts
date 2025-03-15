@@ -27,7 +27,7 @@ export class ProjectRequestDto {
 
   @ApiProperty({
     description: 'List of position IDs',
-    example: ['dev123', 'lead456'],
+    example: ['67c211fcffc1c3bf06250f53', '67d3d335cca3e5f4c2ee84ef'],
     type: [String],
   })
   @IsArray()

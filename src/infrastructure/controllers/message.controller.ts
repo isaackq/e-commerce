@@ -1,13 +1,13 @@
 import { MessageRequestDto } from '@application/message/dtos/request/message.request.dto';
-import { ObjectIdValidationPipe } from '@application/pipes/object-id-validation.pipe';
+import { ObjectIdValidationPipe } from '@infrastructure/pipes/object-id-validation.pipe';
 import { CreateMessageUseCase } from '@application/message/usecase/create-message.usecase';
 import { Body, Controller, Get, Header, HttpException, HttpStatus, Param, Post, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetMessageUseCase } from '@application/message/usecase/get-message.usecase';
-import { CurrentUser } from '@application/user/decorators/current-user.decorator';
+import { CurrentUser } from '@infrastructure/decorators/current-user.decorator';
 import { User } from '@domain/entities/User';
 import { MessageResponseDto } from '@application/message/dtos/response/message.response.dto';
-import { Roles } from '@application/user/decorators/roles.decorator';
+import { Roles } from '@infrastructure/decorators/roles.decorator';
 import { RolesEnum } from '@domain/enums/roles.enum';
 
 @Controller('/messages')

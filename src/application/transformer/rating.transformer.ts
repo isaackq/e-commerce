@@ -15,17 +15,12 @@ export class RatingTransformer {
 
   async toEntity(ratingDto: RatingRequestDto): Promise<Rating> {
     const employee = await this.userRepository.findOne(ratingDto.employeeId);
+
     if (!employee) {
       throw new BadRequestException('employee id invalid');
     }
 
-    const project = await this.projectRepository.findOne(ratingDto.employeeId);
-    if (!project) {
-      throw new BadRequestException('project id invalid');
-    }
-
     const rating = new Rating();
-    rating.project = project;
     rating.employee = employee;
     rating.value = ratingDto.value;
 

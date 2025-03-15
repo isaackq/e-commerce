@@ -1,7 +1,7 @@
 import { PositionRequestDto } from '@application/position/dtos/request/position.request.dto';
 import { PositionResponseDto } from '@application/position/dtos/response/project.response.dto';
 import { CreatePositionUsecase } from '@application/position/usecase/create-position.usecase';
-import { Roles } from '@application/user/decorators/roles.decorator';
+import { Roles } from '@infrastructure/decorators/roles.decorator';
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { Body, Controller, Header, HttpStatus, Post, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';

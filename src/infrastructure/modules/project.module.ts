@@ -5,9 +5,10 @@ import { ProjectRepository } from '@infrastructure/repositories/project.reposito
 import { Project, ProjectSchema } from '@infrastructure/schemas/project.schema';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { PositiontModule } from './position.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Project.name, schema: ProjectSchema }])],
+  imports: [MongooseModule.forFeature([{ name: Project.name, schema: ProjectSchema }]), PositiontModule],
   controllers: [ProjectController],
   providers: [
     CreateProjectUsecase,

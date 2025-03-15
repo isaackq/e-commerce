@@ -1,8 +1,8 @@
 import { ProjectRequestDto } from '@application/project/dtos/request/project.request.dto';
 import { ProjectResponseDto } from '@application/project/dtos/response/project.response.dto';
 import { CreateProjectUsecase } from '@application/project/usecase/create-project.usecase';
-import { CurrentUser } from '@application/user/decorators/current-user.decorator';
-import { Roles } from '@application/user/decorators/roles.decorator';
+import { CurrentUser } from '@infrastructure/decorators/current-user.decorator';
+import { Roles } from '@infrastructure/decorators/roles.decorator';
 import { User } from '@domain/entities/User';
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { Body, Controller, Header, HttpStatus, Post, ValidationPipe } from '@nestjs/common';
@@ -21,7 +21,7 @@ export class ProjectController {
     type: ProjectResponseDto,
   })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
-  @Roles([RolesEnum.MANAGER])
+  @Roles([RolesEnum.OWNER, RolesEnum.MANAGER])
   @Post()
   @Header('Content-Type', 'application/json')
   async create(

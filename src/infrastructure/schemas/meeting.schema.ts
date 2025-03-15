@@ -7,13 +7,13 @@ export type MeetingDocument = HydratedDocument<Meeting>;
 
 @Schema()
 export class Meeting extends Document {
-  @Prop({ type: String, isRequired: true, trim: true })
+  @Prop({ type: String, isRequired: true, unique: true, trim: true })
   link: string;
 
-  @Prop({ type: Types.ObjectId, ref: Project.name, required: true })
+  @Prop({ type: Types.ObjectId, ref: Project.name, isRequired: true })
   project: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: User.name, isRequired: true })
+  @Prop({ type: Types.ObjectId, ref: User.name, isRequired: true, immutable: true })
   createdBy: Types.ObjectId;
 
   @Prop({ type: [Types.ObjectId], ref: User.name, isRequired: true })

@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { Roles } from '../decorators/roles.decorator';
 import { UserRepository } from '@infrastructure/repositories/user.repository';
+import { AppRequest } from '@infrastructure/requests/app-request';
 
 @Injectable()
 export class TokenGuard implements CanActivate {
@@ -21,7 +22,7 @@ export class TokenGuard implements CanActivate {
     }
 
     try {
-      const request = context.switchToHttp().getRequest();
+      const request = context.switchToHttp().getRequest<AppRequest>();
       const token = this.extractTokenFromRequest(request);
 
       if (!token) {
@@ -29,7 +30,7 @@ export class TokenGuard implements CanActivate {
       }
 
       const payload = await this.jwtService.verifyAsync(token);
-      const user = this.userRepository.findOne(payload.sub);
+      const user = await this.userRepository.findOne(payload.sub);
 
       if (!user) {
         throw new UnauthorizedException();

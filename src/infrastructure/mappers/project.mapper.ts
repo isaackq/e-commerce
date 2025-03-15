@@ -17,9 +17,7 @@ export class ProjectMapper {
     project.positions = projectDocument.positions.map((positionDocument) =>
       PositionMapper.map(positionDocument as any),
     );
-    if (typeof projectDocument.createdBy === 'object') {
-      project.createdBy = UserMapper.map(projectDocument.createdBy as any);
-    }
+    project.createdBy = UserMapper.map(projectDocument.createdBy as any);
 
     return project;
   }

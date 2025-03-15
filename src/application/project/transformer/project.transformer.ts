@@ -1,10 +1,10 @@
 import { Project } from '@domain/entities/Project';
 import { ProjectRequestDto } from '../dtos/request/project.request.dto';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, Inject } from '@nestjs/common';
 import { PositionRepositoryInterface } from '@domain/ports/position.repository.interface';
 
 export class ProjectTransformer {
-  constructor(private readonly positionRepository: PositionRepositoryInterface) {}
+  constructor(@Inject('PositionRepository') private readonly positionRepository: PositionRepositoryInterface) {}
 
   async toEntity(projectRequestDto: ProjectRequestDto): Promise<Project> {
     const project = new Project();

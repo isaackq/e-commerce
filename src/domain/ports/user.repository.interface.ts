@@ -11,6 +11,5 @@ export interface UserRepositoryInterface {
   findOne(id: string): Promise<User | null>;
   findMany(criteria?: Partial<UserCriteria>, page?: number, limit?: number): Promise<User[]>;
   count(criteria?: Partial<UserCriteria>): Promise<number>;
-  findOne(id: string): Promise<User | null>;
   findOneByEmail(email: string): Promise<User | null>;
 }

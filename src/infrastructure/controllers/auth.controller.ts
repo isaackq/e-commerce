@@ -33,7 +33,7 @@ export class AuthController {
   async login(@Body(new ValidationPipe()) signInDto: SignInDto): Promise<Token> {
     try {
       return await this.loginUseCase.execute(signInDto);
-    } catch (_) {
+    } catch {
       throw new UnauthorizedException('Invalid credentials');
     }
   }
@@ -50,7 +50,7 @@ export class AuthController {
   ): Promise<Pick<Token, 'accessToken'>> {
     try {
       return await this.refreshTokenUseCase.execute(refreshTokenDto);
-    } catch (_) {
+    } catch {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
   }

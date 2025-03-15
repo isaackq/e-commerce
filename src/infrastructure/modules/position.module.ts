@@ -17,5 +17,6 @@ import { MongooseModule } from '@nestjs/mongoose';
       useClass: PositionRepository,
     },
   ],
+  exports: ['PositionRepository'],
 })
 export class PositiontModule {}

@@ -21,5 +21,11 @@ import { GetMessageUseCase } from '@application/message/usecase/get-message.usec
       useClass: MessageRepository,
     },
   ],
+  exports: [
+    {
+      provide: 'MessageRepository',
+      useClass: MessageRepository,
+    },
+  ],
 })
 export class MessageModule {}

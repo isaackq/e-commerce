@@ -18,7 +18,6 @@ export class RatingMapper {
     const employee = new User();
     employee.id = ratingDocument.employee.toString();
 
-    
     rating.project = project;
     rating.employee = employee;
     rating.value = ratingDocument.value;

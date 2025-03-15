@@ -12,12 +12,14 @@ export class PositionRepository implements PositionRepositoryInterface {
     @InjectModel(PositionSchema.name)
     private positionModel: Model<PositionDocument>,
   ) {}
+
   async save(position: Position): Promise<Position> {
     const positionDocument = await this.positionModel.create(position);
     position.id = positionDocument._id.toString();
 
     return position;
   }
+
   async findByIds(ids: string[]): Promise<Position[]> {
     const positionDocument = await this.positionModel.find({ _id: { $in: ids } }).exec();
 

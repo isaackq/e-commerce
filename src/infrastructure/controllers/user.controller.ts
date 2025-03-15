@@ -1,7 +1,7 @@
 import { PaginatorRequestDto } from '@application/dtos/request/paginator.request.dto';
 import { PaginatorResponseDto } from '@application/dtos/response/paginator.response.dto';
-import { CurrentUser } from '@application/user/decorators/current-user.decorator';
-import { Roles } from '@application/user/decorators/roles.decorator';
+import { CurrentUser } from '@infrastructure/decorators/current-user.decorator';
+import { Roles } from '@infrastructure/decorators/roles.decorator';
 import { UserRequestDto } from '@application/user/dtos/request/user.request.dto';
 import { UserResponseDto } from '@application/user/dtos/response/user.response.dto';
 import { GetUsersUseCase } from '@application/user/usecase/get-users.usecase';

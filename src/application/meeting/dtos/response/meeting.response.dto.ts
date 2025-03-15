@@ -5,6 +5,13 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class MeetingResponseDto {
   @ApiProperty({
+    example: '67c211fcffc1c3bf06250f53',
+    description: 'The id for the meeting',
+    type: String,
+  })
+  public id: string;
+
+  @ApiProperty({
     example: 'https://meeting.com',
     description: 'The link for the meeting',
     required: true,
@@ -18,6 +25,13 @@ export class MeetingResponseDto {
     type: ProjectResponseDto,
   })
   public project: ProjectResponseDto;
+
+  @ApiProperty({
+    description: 'The user who created the meeting',
+    required: true,
+    type: UserResponseDto,
+  })
+  public createdBy: UserResponseDto;
 
   @ApiProperty({
     description: 'The users invited to the meeting (at least one participant required)',
@@ -50,29 +64,35 @@ export class MeetingResponseDto {
   public description?: string;
 
   constructor(
+    id: string,
     link: string,
     project: ProjectResponseDto,
     participants: UserResponseDto[],
     startDate: Date,
     duration: number,
     description: string | null,
+    createdBy: UserResponseDto,
   ) {
+    this.id = id;
     this.link = link;
     this.project = project;
     this.participants = participants;
     this.startDate = startDate;
     this.duration = duration;
     this.description = description;
+    this.createdBy = createdBy;
   }
 
   public static createFromEntity(meeting: Meeting): MeetingResponseDto {
     return new MeetingResponseDto(
+      meeting.id,
       meeting.link,
       ProjectResponseDto.createFromEntity(meeting.project),
       meeting.participants.map((user) => UserResponseDto.createFromEntity(user)),
       meeting.startDate,
       meeting.duration,
       meeting.description,
+      UserResponseDto.createFromEntity(meeting.createdBy),
     );
   }
 }
