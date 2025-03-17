@@ -29,7 +29,7 @@ export class RatingController {
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'You are not allowed to access this rating' })
   @Roles([RolesEnum.MANAGER, RolesEnum.OWNER])
   @UseGuards(EntityOwnerGuard)
-  @MapEntity({ entityName: 'Project', idKey: 'projectId', source: 'body' })
+  @MapEntity({ entityName: 'Project', paramName: 'projectId', source: 'body' })
   @Put('/ratings')
   async editRating(@Req() request: AppRequest, @Body() ratingRequestDto: RatingRequestDto): Promise<void> {
     try {
@@ -77,7 +77,7 @@ export class RatingController {
   @Get('employees/ratings')
   async getEmployeeRatings(@CurrentUser() user: User): Promise<RatingResponseDto[]> {
     try {
-      return await this.getEmployeeRatingsUsecase.execute(user.id);
+      return await this.getEmployeeRatingsUsecase.execute(user);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -22,7 +22,6 @@ export class RepositoryLocator implements OnModuleInit {
   }
 
   getRepository(entityName: string): FindOneRepositoryInterface {
-    console.log(this.repositories);
     const repository = this.repositories.get(entityName);
 
     if (!repository) {

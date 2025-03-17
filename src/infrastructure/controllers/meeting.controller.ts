@@ -90,10 +90,10 @@ export class MeetingController {
     description: 'Only the host of the meeting can update the details of the meeting',
   })
   @Roles([RolesEnum.OWNER, RolesEnum.MANAGER, RolesEnum.EMPLOYEE])
-  @Put('/:id')
   @MapEntity({ entityName: 'Meeting' })
   @UseGuards(EntityOwnerGuard)
   @Header('Content-Type', 'application/json')
+  @Put('/:id')
   async updateMeeting(
     @Req() request: AppRequest,
     @Body(new ValidationPipe()) meetingRequestDto: MeetingRequestDto,

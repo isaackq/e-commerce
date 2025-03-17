@@ -4,6 +4,7 @@ import { Reflector } from '@nestjs/core';
 import { MapEntity } from '../decorators/map-entity.decorator';
 import { AppRequest } from '@infrastructure/requests/app-request';
 import { Types } from 'mongoose';
+import { RolesEnum } from '@domain/enums/roles.enum';
 
 @Injectable()
 export class EntityOwnerGuard implements CanActivate {
@@ -23,9 +24,9 @@ export class EntityOwnerGuard implements CanActivate {
       throw new BadRequestException('Metadata not found for MapEntity');
     }
 
-    const { entityName, idKey = 'id', source = 'params' } = metadata;
+    const { entityName, paramName = 'id', source = 'params', authorizeOwner = false } = metadata;
 
-    const entityId = request[source][idKey];
+    const entityId = request[source][paramName];
 
     if (!entityId) {
       throw new BadRequestException('ID is required');
@@ -48,6 +49,6 @@ export class EntityOwnerGuard implements CanActivate {
 
     request.entity = entity;
 
-    return entity.getCreatedBy().id === user.id;
+    return entity.getCreatedBy().id === user.id || (user.role === RolesEnum.OWNER && authorizeOwner);
   }
 }

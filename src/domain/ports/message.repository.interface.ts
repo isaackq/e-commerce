@@ -1,7 +1,7 @@
 import type { Message } from '@domain/entities/Message';
-import { User } from '@domain/entities/User';
+import { FindOneRepositoryInterface } from './find-one.repository.interface';
 
-export interface MessageRepositoryInterface {
+export interface MessageRepositoryInterface extends FindOneRepositoryInterface {
   save(message: Message): Promise<Message>;
-  findOne(id: string, sentBy?: User): Promise<Message | null>;
+  findOne(id: string): Promise<Message | null>;
 }
