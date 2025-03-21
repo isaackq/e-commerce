@@ -12,7 +12,9 @@ import { PositiontModule } from '@infrastructure/modules/position.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from 'config/database.config';
 import appConfig from 'config/app.config';
+import userPasswordConfig from 'config/user-password.config';
 import { RepositoryLocator } from '@infrastructure/locators/repository.locator';
+import jwtConfig from 'config/jwt.config';
 
 const ENV = process.env.NODE_ENV;
 
@@ -22,10 +24,9 @@ const ENV = process.env.NODE_ENV;
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
-      load: [databaseConfig, appConfig],
+      load: [databaseConfig, appConfig, userPasswordConfig, jwtConfig],
     }),
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory(configService: ConfigService) {
         return {

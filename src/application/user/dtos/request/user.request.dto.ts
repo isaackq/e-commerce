@@ -1,7 +1,8 @@
-import { IsString, IsEmail, IsDate, IsMobilePhone, IsNotEmpty, IsStrongPassword, IsEnum } from 'class-validator';
+import { IsString, IsEmail, IsDate, IsMobilePhone, IsNotEmpty, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsPassword } from '@infrastructure/decorators/is-password.decorator';
 
 export class UserRequestDto {
   @ApiProperty({
@@ -10,8 +11,8 @@ export class UserRequestDto {
     required: true,
     type: String,
   })
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   public firstname: string;
 
   @ApiProperty({
@@ -20,8 +21,8 @@ export class UserRequestDto {
     required: true,
     type: String,
   })
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   public lastname: string;
 
   @ApiProperty({
@@ -30,8 +31,8 @@ export class UserRequestDto {
     required: true,
     type: String,
   })
-  @IsEmail()
   @IsNotEmpty()
+  @IsEmail()
   public email: string;
 
   @ApiProperty({
@@ -40,14 +41,8 @@ export class UserRequestDto {
     required: true,
     type: String,
   })
-  @IsStrongPassword({
-    minLength: 5,
-    minLowercase: 0,
-    minUppercase: 0,
-    minNumbers: 0,
-    minSymbols: 0,
-  })
   @IsNotEmpty()
+  @IsPassword()
   public password: string;
 
   @ApiProperty({

@@ -74,6 +74,12 @@ export class UserRepository implements UserRepositoryInterface {
     return userDocuments.map((userDocument) => UserMapper.map(userDocument));
   }
 
+  async resetPassword(userId: string, newPassword: string): Promise<User> {
+    const userDocument = await this.userModel.findByIdAndUpdate(userId, { password: newPassword }, { new: true });
+
+    return UserMapper.map(userDocument);
+  }
+
   async count(criteria?: Partial<UserCriteria>): Promise<number> {
     const params = this.buildParams(criteria);
 

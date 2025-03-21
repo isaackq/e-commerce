@@ -45,6 +45,10 @@ export class JwtTokenGenerator implements TokenGeneratorInterfece {
     }
   }
 
+  async resetPasswordToken(user: User): Promise<string> {
+    return await this.generateToken(user.id, this.jwtConfiguration.resetPasswordTokenTtl, { email: user.email });
+  }
+
   private async generateToken<T>(sub: string, expiresIn: number, payload?: T): Promise<string> {
     return await this.jwtService.signAsync(
       {

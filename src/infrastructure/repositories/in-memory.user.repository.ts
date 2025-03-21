@@ -42,4 +42,8 @@ export class InMemoryUserRepository implements UserRepositoryInterface {
   async findMany(criteria?: Partial<UserCriteria>): Promise<User[]> {
     return this.users;
   }
+
+  async resetPassword(id: string, newPassword: string): Promise<User> {
+    return this.users[0];
+  }
 }
