@@ -12,6 +12,7 @@ import {
   HttpStatus,
   Post,
   Put,
+  Delete,
   Query,
   Req,
   UseGuards,
@@ -27,6 +28,7 @@ import { EntityOwnerGuard } from '@infrastructure/guards/entity-owner.guard';
 import { MapEntity } from '@infrastructure/decorators/map-entity.decorator';
 import { AppRequest } from '@infrastructure/requests/app-request';
 import { Meeting } from '@domain/entities/Meeting';
+import { DeleteMeetingUsecase } from '@application/meeting/usecases/delete-meeting.usecase';
 
 @Controller('/users/meetings')
 export class MeetingController {
@@ -34,6 +36,7 @@ export class MeetingController {
     private readonly createMeetingUsecase: CreateMeetingUsecase,
     private readonly getMeetingsUsecase: GetMeetingsUsecase,
     private readonly updateMeetingUsecase: UpdateMeetingUsecase,
+    private readonly deleteMeetingUsecase: DeleteMeetingUsecase,
   ) {}
 
   @ApiBearerAuth()
@@ -44,7 +47,7 @@ export class MeetingController {
     description: 'The meeting has been successfully created',
     type: MeetingResponseDto,
   })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid data' })
   @Roles([RolesEnum.OWNER, RolesEnum.MANAGER, RolesEnum.EMPLOYEE])
   @Post()
   @Header('Content-Type', 'application/json')
@@ -52,11 +55,7 @@ export class MeetingController {
     @Body(new ValidationPipe()) meetingRequestDto: MeetingRequestDto,
     @CurrentUser() user: User,
   ): Promise<MeetingResponseDto> {
-    try {
-      return await this.createMeetingUsecase.execute(meetingRequestDto, user);
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    return await this.createMeetingUsecase.execute(meetingRequestDto, user);
   }
 
   @ApiBearerAuth()
@@ -101,5 +100,20 @@ export class MeetingController {
     const meeting = request.entity as Meeting;
 
     return await this.updateMeetingUsecase.execute(meeting, meetingRequestDto);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Cancel meeting' })
+  @ApiParam({ name: 'id', description: 'Meeting ID' })
+  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'Meeting was cancelled successfully' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: "This meeting doesn't exist" })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'You are not allowed to cancel this meeting' })
+  @Roles([RolesEnum.OWNER, RolesEnum.MANAGER])
+  @MapEntity({ entityName: 'Meeting', authorizeOwner: true })
+  @UseGuards(EntityOwnerGuard)
+  @Delete('/:id')
+  @Header('Content-Type', 'application/json')
+  async delete(@Req() request: AppRequest): Promise<void> {
+    await this.deleteMeetingUsecase.execute(request.entity as Meeting);
   }
 }

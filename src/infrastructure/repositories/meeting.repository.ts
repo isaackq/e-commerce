@@ -66,4 +66,8 @@ export class MeetingRepository implements MeetingRepositoryInterface {
 
     return MeetingMapper.map(await meetingDocument.populate('project createdBy participants'));
   }
+
+  async delete(meetingId: string): Promise<void> {
+    await this.meetingModel.findByIdAndDelete(meetingId);
+  }
 }

@@ -10,6 +10,7 @@ import { MeetingTransformer } from '@application/meeting/transformers/meeting.tr
 import { GetMeetingsUsecase } from '@application/meeting/usecases/get-meetings.usecase';
 import { ProjectModule } from './project.module';
 import { UpdateMeetingUsecase } from '@application/meeting/usecases/update-meeting.usecase';
+import { DeleteMeetingUsecase } from '@application/meeting/usecases/delete-meeting.usecase';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: Meeting.name, schema: MeetingSchema }]), UserModule, ProjectModule],
@@ -18,6 +19,7 @@ import { UpdateMeetingUsecase } from '@application/meeting/usecases/update-meeti
     CreateMeetingUsecase,
     GetMeetingsUsecase,
     UpdateMeetingUsecase,
+    DeleteMeetingUsecase,
     MeetingTransformer,
     Connection,
     {

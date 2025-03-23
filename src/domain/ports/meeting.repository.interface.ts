@@ -7,4 +7,5 @@ export interface MeetingRepositoryInterface extends FindOneRepositoryInterface {
   findOne(meetingId: string): Promise<Meeting>;
   findMany(userId: string, meetingFilterDto: MeetingFilterDto): Promise<Meeting[]>;
   update(meetingId: string, meeting: Meeting): Promise<Meeting>;
+  delete(meetingId: string): Promise<void>;
 }
