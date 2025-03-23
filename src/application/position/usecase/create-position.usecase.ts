@@ -2,7 +2,7 @@ import { PositionTransformer } from '../transformer/position.transformer';
 import { Inject, Injectable } from '@nestjs/common';
 import { PositionRepositoryInterface } from '@domain/ports/position.repository.interface';
 import { PositionRequestDto } from '../dtos/request/position.request.dto';
-import { PositionResponseDto } from '../dtos/response/project.response.dto';
+import { PositionResponseDto } from '../dtos/response/position.response.dto';
 
 @Injectable()
 export class CreatePositionUsecase {

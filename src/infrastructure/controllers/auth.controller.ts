@@ -39,7 +39,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Refresh access token' })
-  @ApiBody({ type: RefreshTokenDto }) // Swagger documente le payload attendu
+  @ApiBody({ type: RefreshTokenDto })
   @ApiResponse({ status: HttpStatus.OK, description: 'New access token issued', type: Token })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Invalid or expired refresh token' })
   @Post('/refresh-token')

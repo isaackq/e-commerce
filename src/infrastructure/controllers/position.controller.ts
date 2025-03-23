@@ -1,14 +1,18 @@
 import { PositionRequestDto } from '@application/position/dtos/request/position.request.dto';
-import { PositionResponseDto } from '@application/position/dtos/response/project.response.dto';
+import { PositionResponseDto } from '@application/position/dtos/response/position.response.dto';
 import { CreatePositionUsecase } from '@application/position/usecase/create-position.usecase';
-import { Roles } from '@infrastructure/decorators/roles.decorator';
+import { GetPositionsUsecase } from '@application/position/usecase/get-positions.usecase';
 import { RolesEnum } from '@domain/enums/roles.enum';
-import { Body, Controller, Header, HttpStatus, Post, ValidationPipe } from '@nestjs/common';
+import { Roles } from '@infrastructure/decorators/roles.decorator';
+import { Body, Controller, Get, Header, HttpStatus, Post, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('/positions')
 export class PositionController {
-  constructor(private readonly createPositionUsecase: CreatePositionUsecase) {}
+  constructor(
+    private readonly createPositionUsecase: CreatePositionUsecase,
+    private readonly getPositionsUseCase: GetPositionsUsecase,
+  ) {}
 
   @ApiOperation({ summary: 'Create a new position' })
   @ApiBearerAuth()
@@ -24,5 +28,20 @@ export class PositionController {
   @Header('Content-Type', 'application/json')
   async create(@Body(ValidationPipe) positionRequestDto: PositionRequestDto): Promise<PositionResponseDto> {
     return this.createPositionUsecase.execute(positionRequestDto);
+  }
+
+  @ApiOperation({ summary: 'Get all positions' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get all positions',
+    type: [PositionResponseDto],
+  })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @Roles([RolesEnum.OWNER, RolesEnum.MANAGER, RolesEnum.EMPLOYEE])
+  @Get()
+  @Header('Content-Type', 'application/json')
+  async getAll(): Promise<PositionResponseDto[]> {
+    return this.getPositionsUseCase.execute();
   }
 }
