@@ -15,6 +15,8 @@ import appConfig from 'config/app.config';
 import userPasswordConfig from 'config/user-password.config';
 import { RepositoryLocator } from '@infrastructure/locators/repository.locator';
 import jwtConfig from 'config/jwt.config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { TypedEventEmitterModule } from '@infrastructure/modules/typed-event-emitter.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -35,6 +37,7 @@ const ENV = process.env.NODE_ENV;
         };
       },
     }),
+    EventEmitterModule.forRoot({}),
     UserModule,
     MessageModule,
     MeetingModule,
@@ -42,6 +45,7 @@ const ENV = process.env.NODE_ENV;
     RatingModule,
     ProjectModule,
     PositiontModule,
+    TypedEventEmitterModule,
   ],
   providers: [
     DiscoveryService,

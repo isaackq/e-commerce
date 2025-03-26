@@ -9,6 +9,8 @@ import { User } from '@domain/entities/user/User';
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { Body, Controller, Get, Header, HttpStatus, Param, Post, Query, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, getSchemaPath } from '@nestjs/swagger';
+import { TypedEventEmitter } from '@infrastructure/providers/typed-event-emitter.provider';
+import { UserRegisterationEvent } from '@infrastructure/events/user-registeration.event';
 import { EmployeeRequestDto } from '@application/user/dtos/request/employee.request.dto';
 import { EmployeeResponseDto } from '@application/user/dtos/response/employee.response.dto';
 import { ManagerRequestDto } from '@application/user/dtos/request/manager.request.dto';
@@ -28,6 +30,7 @@ export class UserController {
     private readonly registerOwnerUseCase: RegisterOwnerUseCase,
     private readonly getUsersUsecase: GetUsersUseCase,
     private readonly getUserDetailsUsecase: GetUserDetailsUseCase,
+    private readonly eventEmitter: TypedEventEmitter,
   ) {}
 
   @ApiOperation({ summary: 'Add a new employee' })
@@ -47,7 +50,13 @@ export class UserController {
   async createEmployee(
     @Body(new ValidationPipe()) employeeRequestDto: EmployeeRequestDto,
   ): Promise<EmployeeResponseDto> {
-    return await this.registerEmployeeUseCase.execute(employeeRequestDto);
+    const employee = await this.registerEmployeeUseCase.execute(employeeRequestDto);
+    await this.eventEmitter.emit(
+      'user.verify-email',
+      new UserRegisterationEvent(employee.firstname, employee.email, employee.mobileNumber),
+    );
+
+    return employee;
   }
 
   @ApiOperation({ summary: 'Add a new manager' })
@@ -65,7 +74,13 @@ export class UserController {
   @Post('/managers')
   @Header('Content-Type', 'application/json')
   async createManager(@Body(new ValidationPipe()) managerRequestDto: ManagerRequestDto): Promise<ManagerResponseDto> {
-    return await this.registerManagerUseCase.execute(managerRequestDto);
+    const manager = await this.registerManagerUseCase.execute(managerRequestDto);
+    await this.eventEmitter.emit(
+      'user.verify-email',
+      new UserRegisterationEvent(manager.firstname, manager.email, manager.mobileNumber),
+    );
+
+    return manager;
   }
 
   @ApiOperation({ summary: 'Add a new owner' })
@@ -83,7 +98,13 @@ export class UserController {
   @Post('/owners')
   @Header('Content-Type', 'application/json')
   async createOwner(@Body(new ValidationPipe()) ownerRequestDto: OwnerRequestDto): Promise<OwnerResponseDto> {
-    return await this.registerOwnerUseCase.execute(ownerRequestDto);
+    const owner = await this.registerOwnerUseCase.execute(ownerRequestDto);
+    await this.eventEmitter.emit(
+      'user.verify-email',
+      new UserRegisterationEvent(owner.firstname, owner.email, owner.mobileNumber),
+    );
+
+    return owner;
   }
 
   @ApiBearerAuth()
