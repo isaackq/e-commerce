@@ -27,6 +27,6 @@ export class MessageRepository implements MessageRepositoryInterface {
       return null;
     }
 
-    return MessageMapper.map(messageDocument);
+    return MessageMapper.map(await messageDocument.populate('sentBy'));
   }
 }

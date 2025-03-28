@@ -49,6 +49,6 @@ export class EntityOwnerGuard implements CanActivate {
 
     request.entity = entity;
 
-    return entity.getCreatedBy().id === user.id || (user.role === RolesEnum.OWNER && authorizeOwner);
+    return entity.getCreatedBy().id === user.id || (user.getRole() === RolesEnum.OWNER && authorizeOwner);
   }
 }

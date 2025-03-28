@@ -1,10 +1,10 @@
 import { Project } from './Project';
-import { User } from './User';
+import { Employee } from './user/Employee';
 
 export class Rating {
   id?: string;
   project: Project;
-  employee: User;
+  employee: Employee;
   value: number;
   createdAt?: Date;
 }

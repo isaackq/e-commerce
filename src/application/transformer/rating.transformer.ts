@@ -1,5 +1,6 @@
 import { RatingRequestDto } from '@application/rating/dtos/request/rating.request.dto';
 import { Rating } from '@domain/entities/Rating';
+import { Employee } from '@domain/entities/user/Employee';
 import { ProjectRepositoryInterface } from '@domain/ports/project.repository.interface';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
@@ -14,7 +15,7 @@ export class RatingTransformer {
   ) {}
 
   async toEntity(ratingDto: RatingRequestDto): Promise<Rating> {
-    const employee = await this.userRepository.findOne(ratingDto.employeeId);
+    const employee = (await this.userRepository.findOne(ratingDto.employeeId)) as Employee;
 
     if (!employee) {
       throw new BadRequestException('employee id invalid');

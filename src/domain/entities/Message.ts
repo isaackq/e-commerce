@@ -1,5 +1,5 @@
-import { User } from './User';
 import { CreatedByInterface } from './CretaedByInterface';
+import { User } from './user/User';
 
 export class Message implements CreatedByInterface {
   public id?: string;

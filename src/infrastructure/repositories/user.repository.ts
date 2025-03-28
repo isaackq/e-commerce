@@ -1,12 +1,15 @@
 import { HashingProviderInterface } from '@application/user/providers/hashing.provider.interface';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import type { UserCriteria, UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { UserMapper } from '@infrastructure/mappers/user.mapper';
-import { UserDocument, User as UserSchema } from '@infrastructure/schemas/user.schema';
+import { User as UserSchema, UserDocument } from '@infrastructure/schemas/user.schema';
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Employee } from '@domain/entities/user/Employee';
+import { RegisterRepository } from '@infrastructure/decorators/register-repository.decorator';
 
+@RegisterRepository('User')
 @Injectable()
 export class UserRepository implements UserRepositoryInterface {
   constructor(
@@ -26,14 +29,17 @@ export class UserRepository implements UserRepositoryInterface {
     if (existingUsers.length > 0) {
       throw new ConflictException('A user with email and/or mobileNumber already exists.');
     }
-
     const password = await this.hashingProvider.hash(user.password);
 
-    const userDocument = await this.userModel.create({
+    const userData = {
       ...user,
+      role: user.getRole(),
       birthday: user.birthday.value,
       password: password,
-    });
+      position: user instanceof Employee ? user.position?.id : undefined,
+    };
+
+    const userDocument = await this.userModel.create(userData);
 
     return UserMapper.map(userDocument);
   }

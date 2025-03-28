@@ -20,6 +20,16 @@ export class PositionRepository implements PositionRepositoryInterface {
     return position;
   }
 
+  async findOne(id: string): Promise<Position | null> {
+    const positionDocument = await this.positionModel.findById(id);
+
+    if (!positionDocument) {
+      return null;
+    }
+
+    return PositionMapper.map(positionDocument);
+  }
+
   async findByIds(ids: string[]): Promise<Position[]> {
     const positionDocument = await this.positionModel.find({ _id: { $in: ids } }).exec();
 

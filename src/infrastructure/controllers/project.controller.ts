@@ -3,7 +3,7 @@ import { ProjectResponseDto } from '@application/project/dtos/response/project.r
 import { CreateProjectUsecase } from '@application/project/usecase/create-project.usecase';
 import { CurrentUser } from '@infrastructure/decorators/current-user.decorator';
 import { Roles } from '@infrastructure/decorators/roles.decorator';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { Body, Controller, Header, HttpStatus, Post, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';

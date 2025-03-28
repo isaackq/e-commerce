@@ -2,7 +2,7 @@ import { MeetingRequestDto } from '@application/meeting/dtos/request/meeting.req
 import { MeetingRepositoryInterface } from '@domain/ports/meeting.repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
 import { MeetingTransformer } from '../transformers/meeting.transformer';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import { MeetingResponseDto } from '../dtos/response/meeting.response.dto';
 
 @Injectable()

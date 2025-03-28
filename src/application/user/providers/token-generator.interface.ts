@@ -1,4 +1,4 @@
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import { Token } from '../dtos/response/token.dto';
 
 export interface TokenGeneratorInterfece {

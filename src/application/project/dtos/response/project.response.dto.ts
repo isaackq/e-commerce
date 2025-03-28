@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserResponseDto } from '@application/user/dtos/response/user.response.dto';
 import { Position } from '@domain/entities/Position';
 import { Project } from '@domain/entities/Project';
-import { User } from '@domain/entities/User';
+import { ManagerResponseDto } from '@application/user/dtos/response/manager.response.dto';
+import { Manager } from '@domain/entities/user/Manager';
+import { UserResponseDto } from '@application/user/dtos/response/user.response.dto';
 
 export class ProjectResponseDto {
   @ApiProperty({ example: '123e4567e89b', description: 'Unique identifier of the project' })
@@ -11,8 +12,8 @@ export class ProjectResponseDto {
   @ApiProperty({ example: 'Project Alpha', description: 'Title of the project' })
   title: string;
 
-  @ApiProperty({ type: () => UserResponseDto, description: 'User who created the project' })
-  createdBy: UserResponseDto;
+  @ApiProperty({ type: () => ManagerResponseDto, description: 'User who created the project' })
+  createdBy: ManagerResponseDto;
 
   @ApiProperty({ example: 'document.pdf', description: 'Document associated with the project' })
   document: string;
@@ -40,8 +41,8 @@ export class ProjectResponseDto {
     const projectResponseDto = new ProjectResponseDto();
     projectResponseDto.id = project.id;
     projectResponseDto.title = project.title;
-    if (project.createdBy instanceof User) {
-      projectResponseDto.createdBy = UserResponseDto.createFromEntity(project.createdBy);
+    if (project.createdBy instanceof Manager) {
+      projectResponseDto.createdBy = ManagerResponseDto.createFromEntity(project.createdBy);
     }
     projectResponseDto.document = project.document;
     projectResponseDto.startedAt = project.startedAt;

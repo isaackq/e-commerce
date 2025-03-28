@@ -3,7 +3,7 @@ import {
   RegistrationUserUseCase,
   RequiredError,
 } from '@application/user/usecase/registration-user.usecase';
-import type { User } from '@domain/entities/User';
+import type { User } from '@domain/entities/user/User';
 import { InMemoryUserRepository } from '@infrastructure/repositories/in-memory.user.repository';
 import { beforeEach, describe, expect, test } from '@jest/globals';
 

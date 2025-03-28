@@ -1,8 +1,9 @@
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
-import { UserResponseDto } from '../dtos/response/user.response.dto';
 import { PaginatorResponseDto } from '@application/dtos/response/paginator.response.dto';
+import { UserResponseFactory } from '../factories/user-response.factory';
+import { UserResponseDto } from '../dtos/response/user.response.dto';
 
 @Injectable()
 export class GetUsersUseCase {
@@ -23,7 +24,7 @@ export class GetUsersUseCase {
       page,
       await this.userRepository.count(criteria),
       limit,
-      (await users).map((user) => UserResponseDto.createFromEntity(user)),
+      (await users).map((user) => UserResponseFactory.createFromEntity(user)),
     );
   }
 }

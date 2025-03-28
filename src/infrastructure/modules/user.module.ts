@@ -4,7 +4,9 @@ import { ForgotPasswordUseCase } from '@application/user/usecase/forgot-password
 import { GetUsersUseCase } from '@application/user/usecase/get-users.usecase';
 import { LoginUseCase } from '@application/user/usecase/login.usecase';
 import { RefreshTokenUseCase } from '@application/user/usecase/refresh-token.usecase';
-import { RegistrationUserUseCase } from '@application/user/usecase/registration-user.usecase';
+import { RegisterEmployeeUseCase } from '@application/user/usecase/register-employee.usecase';
+import { RegisterManagerUseCase } from '@application/user/usecase/register-manager.usecase';
+import { RegisterOwnerUseCase } from '@application/user/usecase/register-owner.usecase';
 import { ResetPasswordUseCase } from '@application/user/usecase/reset-password.usecase';
 import { AuthController } from '@infrastructure/controllers/auth.controller';
 import { ResetPasswordController } from '@infrastructure/controllers/reset-password.controller';
@@ -14,15 +16,24 @@ import { JwtTokenGenerator } from '@infrastructure/providers/jwt.token-generator
 import { UserRepository } from '@infrastructure/repositories/user.repository';
 import { User, UserSchema } from '@infrastructure/schemas/user.schema';
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { IsPasswordValidator } from '@infrastructure/validators/is-password.validator';
+import { PositiontModule } from './position.module';
+import jwtConfig from 'config/jwt.config';
+import { GetUserDetailsUseCase } from '@application/user/usecase/get-user-details.usecase';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      {
+        name: User.name,
+        schema: UserSchema,
+      },
+    ]),
+    ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
@@ -33,14 +44,18 @@ import { IsPasswordValidator } from '@infrastructure/validators/is-password.vali
       },
       global: true,
     }),
+    PositiontModule,
   ],
   controllers: [UserController, AuthController, ResetPasswordController],
   providers: [
-    RegistrationUserUseCase,
+    RegisterEmployeeUseCase,
+    RegisterManagerUseCase,
+    RegisterOwnerUseCase,
     LoginUseCase,
     RefreshTokenUseCase,
     UserTransformer,
     GetUsersUseCase,
+    GetUserDetailsUseCase,
     ForgotPasswordUseCase,
     ResetPasswordUseCase,
     Connection,
@@ -62,6 +77,11 @@ import { IsPasswordValidator } from '@infrastructure/validators/is-password.vali
       useClass: ResetPasswordTokenGuard,
     },
   ],
-  exports: [{ provide: 'UserRepository', useClass: UserRepository }],
+  exports: [
+    {
+      provide: 'UserRepository',
+      useClass: UserRepository,
+    },
+  ],
 })
 export class UserModule {}

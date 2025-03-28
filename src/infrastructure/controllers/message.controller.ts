@@ -15,7 +15,7 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { GetMessageUseCase } from '@application/message/usecase/get-message.usecase';
 import { CurrentUser } from '@infrastructure/decorators/current-user.decorator';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import { MessageResponseDto } from '@application/message/dtos/response/message.response.dto';
 import { Roles } from '@infrastructure/decorators/roles.decorator';
 import { RolesEnum } from '@domain/enums/roles.enum';

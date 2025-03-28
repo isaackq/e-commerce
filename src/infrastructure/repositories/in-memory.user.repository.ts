@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import type { UserCriteria, UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Injectable } from '@nestjs/common';
 

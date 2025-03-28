@@ -1,7 +1,7 @@
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { Birthday } from '@domain/objectsValues/Birthday';
 
-export class User {
+export abstract class User {
   public id?: string;
   public firstname: string;
   public lastname: string;
@@ -9,5 +9,9 @@ export class User {
   public password?: string;
   public birthday: Birthday;
   public mobileNumber: string;
-  public role: RolesEnum;
+  public country: string;
+  public city: string;
+  public nationality: string;
+
+  abstract getRole(): RolesEnum;
 }

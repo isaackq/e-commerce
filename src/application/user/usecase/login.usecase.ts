@@ -22,7 +22,6 @@ export class LoginUseCase {
     if (!user) {
       throw new UnauthorizedException('User does not exist');
     }
-
     const isEqual = await this.hashingProvider.compare(signInDto.password, user.password);
 
     if (!isEqual) {

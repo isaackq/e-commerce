@@ -1,6 +1,6 @@
 import { Token } from '@application/user/dtos/response/token.dto';
 import { TokenGeneratorInterfece } from '@application/user/providers/token-generator.interface';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
@@ -18,7 +18,10 @@ export class JwtTokenGenerator implements TokenGeneratorInterfece {
   ) {}
   public async generateTokens(user: User): Promise<Token> {
     const [accessToken, refreshToken] = await Promise.all([
-      await this.generateToken(user.id, this.jwtConfiguration.accessTokenTtl, { email: user.email, role: user.role }),
+      await this.generateToken(user.id, this.jwtConfiguration.accessTokenTtl, {
+        email: user.email,
+        role: user.getRole(),
+      }),
       await this.generateToken(user.id, this.jwtConfiguration.refreshTokenTtl),
     ]);
 
@@ -37,7 +40,7 @@ export class JwtTokenGenerator implements TokenGeneratorInterfece {
       return {
         accessToken: await this.generateToken(user.id, this.jwtConfiguration.accessTokenTtl, {
           email: user.email,
-          role: user.role,
+          role: user.getRole(),
         }),
       };
     } catch (error) {

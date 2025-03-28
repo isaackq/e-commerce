@@ -7,7 +7,7 @@ import { EditRatingUsecase } from '@application/rating/usecase/edit-rating.useca
 import { RatingResponseDto } from '@application/rating/dtos/response/rating.response.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { CurrentUser } from '@infrastructure/decorators/current-user.decorator';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import { GetEmployeeRatingsUsecase } from '@application/rating/usecase/get-employee-ratings.usecase';
 import { AppRequest } from '@infrastructure/requests/app-request';
 import { Project } from '@domain/entities/Project';

@@ -2,13 +2,12 @@ import { MeetingRequestDto } from '@application/meeting/dtos/request/meeting.req
 import { CreateMeetingUsecase } from '@application/meeting/usecases/create-meeting.usecase';
 import { CurrentUser } from '@infrastructure/decorators/current-user.decorator';
 import { Roles } from '@infrastructure/decorators/roles.decorator';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 import {
   Body,
   Controller,
   Get,
   Header,
-  HttpException,
   HttpStatus,
   Post,
   Put,

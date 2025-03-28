@@ -1,7 +1,7 @@
 import { RatingRepositoryInterface } from '@domain/ports/rating.repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
 import { RatingResponseDto } from '../dtos/response/rating.response.dto';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 
 @Injectable()
 export class GetEmployeeRatingsUsecase {

@@ -2,7 +2,7 @@ import { UserRepositoryInterface } from '@domain/ports/user.repository.interface
 import { Inject } from '@nestjs/common';
 import { HashingProviderInterface } from '../providers/hashing.provider.interface';
 import { ResetPasswordRequestDto } from '../dtos/request/reset-password.request.dto';
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/user/User';
 
 export class ResetPasswordUseCase {
   constructor(

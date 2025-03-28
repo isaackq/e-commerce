@@ -32,6 +32,6 @@ export class ProjectRepository implements ProjectRepositoryInterface {
       return null;
     }
 
-    return ProjectMapper.map(projectDocument);
+    return ProjectMapper.map(await projectDocument.populate('createdBy'));
   }
 }

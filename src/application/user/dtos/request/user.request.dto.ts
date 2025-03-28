@@ -1,6 +1,5 @@
-import { IsString, IsEmail, IsDate, IsMobilePhone, IsNotEmpty, IsEnum } from 'class-validator';
+import { IsString, IsEmail, IsDate, IsMobilePhone, IsNotEmpty } from 'class-validator';
 import { Type } from 'class-transformer';
-import { RolesEnum } from '@domain/enums/roles.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsPassword } from '@infrastructure/decorators/is-password.decorator';
 
@@ -65,19 +64,49 @@ export class UserRequestDto {
   public mobileNumber: string | null;
 
   @ApiProperty({
-    example: 'employee',
-    description: 'The role of the User',
-    required: false,
-    enum: [RolesEnum.EMPLOYEE, RolesEnum.MANAGER],
+    example: 'Palestine',
+    description: 'The country address of the user',
+    type: String,
   })
-  @IsEnum(RolesEnum)
-  public role: RolesEnum;
+  @IsNotEmpty()
+  @IsString()
+  country: string;
 
-  constructor(firstname: string, lastname: string, email: string, birthday: Date | null, mobileNumber: string | null) {
+  @ApiProperty({
+    example: 'Jerusalem',
+    description: 'The city address of the user',
+    type: String,
+  })
+  @IsString()
+  @IsNotEmpty()
+  city: string;
+
+  @ApiProperty({
+    example: 'Palestiniane',
+    description: 'The nationality the user',
+    type: String,
+  })
+  @IsString()
+  @IsNotEmpty()
+  nationality: string;
+
+  constructor(
+    firstname: string,
+    lastname: string,
+    email: string,
+    birthday: Date | null,
+    mobileNumber: string | null,
+    country: string,
+    city: string,
+    nationality: string,
+  ) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.birthday = birthday;
     this.mobileNumber = mobileNumber;
+    this.country = country;
+    this.city = city;
+    this.nationality = nationality;
   }
 }

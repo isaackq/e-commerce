@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserResponseDto } from '@application/user/dtos/response/user.response.dto';
 import { Message } from '@domain/entities/Message';
+import { UserResponseDto } from '@application/user/dtos/response/user.response.dto';
+import { UserResponseFactory } from '@application/user/factories/user-response.factory';
 
 export class MessageResponseDto {
   @ApiProperty({ description: 'Unique message ID', example: '65c1b7f5d4f1a4567890abcd' })
@@ -31,7 +32,7 @@ export class MessageResponseDto {
       message.id,
       message.title,
       message.content,
-      UserResponseDto.createFromEntity(message.sentBy),
+      UserResponseFactory.createFromEntity(message.sentBy),
       message.sentAt,
     );
   }

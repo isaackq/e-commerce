@@ -13,7 +13,7 @@ export class MeetingMapper {
       return meeting;
     }
 
-    meeting.id = meetingDocument._id.toString();
+    meeting.id = meetingDocument.id;
     meeting.link = meetingDocument.link;
     meeting.description = meetingDocument.description;
     meeting.duration = meetingDocument.duration;

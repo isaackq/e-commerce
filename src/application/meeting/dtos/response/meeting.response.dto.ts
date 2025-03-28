@@ -1,5 +1,6 @@
 import { ProjectResponseDto } from '@application/project/dtos/response/project.response.dto';
 import { UserResponseDto } from '@application/user/dtos/response/user.response.dto';
+import { UserResponseFactory } from '@application/user/factories/user-response.factory';
 import { Meeting } from '@domain/entities/Meeting';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -63,24 +64,24 @@ export class MeetingResponseDto {
   })
   public description?: string;
 
-  constructor(
+  private constructor(
     id: string,
     link: string,
     project: ProjectResponseDto,
+    createdBy: UserResponseDto,
     participants: UserResponseDto[],
     startDate: Date,
     duration: number,
     description: string | null,
-    createdBy: UserResponseDto,
   ) {
     this.id = id;
     this.link = link;
     this.project = project;
+    this.createdBy = createdBy;
     this.participants = participants;
     this.startDate = startDate;
     this.duration = duration;
     this.description = description;
-    this.createdBy = createdBy;
   }
 
   public static createFromEntity(meeting: Meeting): MeetingResponseDto {
@@ -88,11 +89,11 @@ export class MeetingResponseDto {
       meeting.id,
       meeting.link,
       ProjectResponseDto.createFromEntity(meeting.project),
-      meeting.participants.map((user) => UserResponseDto.createFromEntity(user)),
+      UserResponseFactory.createFromEntity(meeting.createdBy),
+      meeting.participants.map((user) => UserResponseFactory.createFromEntity(user)),
       meeting.startDate,
       meeting.duration,
       meeting.description,
-      UserResponseDto.createFromEntity(meeting.createdBy),
     );
   }
 }
