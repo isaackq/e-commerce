@@ -4,6 +4,6 @@ export interface EmailParams {
   subject: string;
 }
 
-export interface EmailProviderInterface {
+export interface SendEmailProviderInterface {
   send(emailParams: EmailParams): Promise<boolean>;
 }

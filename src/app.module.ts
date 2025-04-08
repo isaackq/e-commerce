@@ -17,7 +17,6 @@ import { RepositoryLocator } from '@infrastructure/locators/repository.locator';
 import jwtConfig from 'config/jwt.config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventDispatcher } from '@infrastructure/providers/event-dispatcher.provider';
-import { RegisterationListener } from '@application/event-dispatcher/listeners/user-registeration.listener';
 import { EmailProvider } from '@infrastructure/providers/send-email.provider';
 
 const ENV = process.env.NODE_ENV;
@@ -74,11 +73,17 @@ const ENV = process.env.NODE_ENV;
       useClass: EmailProvider,
     },
     RepositoryLocator,
-    RegisterationListener,
-    EmailProvider,
+    {
+      provide: 'EmailProvider',
+      useClass: EmailProvider,
+    },
   ],
   exports: [
     RepositoryLocator,
+    {
+      provide: 'EmailProvider',
+      useClass: EmailProvider,
+    },
     {
       provide: 'EventDispatcher',
       useClass: EventDispatcher,

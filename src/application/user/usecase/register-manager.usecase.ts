@@ -6,7 +6,7 @@ import { ManagerRequestDto } from '../dtos/request/manager.request.dto';
 import { UserTransformer } from '../transformers/user.transformer';
 import { Events } from '@application/event-dispatcher/enums/events.enum';
 import { UserRegisterationEvent } from '@application/event-dispatcher/events/user-registeration.event';
-import { EventDispatcherInterface } from '@application/event-dispatcher/ports/event-dispatcher.interface';
+import { EventDispatcherInterface } from '@application/event-dispatcher/event-dispatcher.interface';
 
 @Injectable()
 export class RegisterManagerUseCase {

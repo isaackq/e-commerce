@@ -1,8 +1,8 @@
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { EventDispatcherInterface } from '@application/event-dispatcher/ports/event-dispatcher.interface';
 import { Injectable } from '@nestjs/common';
 import { Events } from '@application/event-dispatcher/events/events';
 import { Events as EventsEnum } from '@application/event-dispatcher/enums/events.enum';
+import { EventDispatcherInterface } from '@application/event-dispatcher/event-dispatcher.interface';
 
 @Injectable()
 export class EventDispatcher implements EventDispatcherInterface {
