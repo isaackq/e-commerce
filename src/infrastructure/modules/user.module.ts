@@ -21,13 +21,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { IsPasswordValidator } from '@infrastructure/validators/is-password.validator';
-<<<<<<< HEAD
 import { PositiontModule } from './position.module';
 import jwtConfig from 'config/jwt.config';
 import { GetUserDetailsUseCase } from '@application/user/usecase/get-user-details.usecase';
-=======
-import { EmailService } from '@infrastructure/services/send-email.service';
->>>>>>> 7c41f44 (add event emitters)
 
 @Module({
   imports: [
@@ -64,7 +60,6 @@ import { EmailService } from '@infrastructure/services/send-email.service';
     ResetPasswordUseCase,
     Connection,
     IsPasswordValidator,
-    EmailService,
     {
       provide: 'UserRepository',
       useClass: UserRepository,

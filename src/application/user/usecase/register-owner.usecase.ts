@@ -4,6 +4,9 @@ import { OwnerRequestDto } from '../dtos/request/owner.request.dto';
 import { Owner } from '@domain/entities/user/Owner';
 import { OwnerResponseDto } from '../dtos/response/owner.response.dto';
 import { UserTransformer } from '../transformers/user.transformer';
+import { EventDispatcherInterface } from '@application/event-dispatcher/ports/event-dispatcher.interface';
+import { Events } from '@application/event-dispatcher/enums/events.enum';
+import { UserRegisterationEvent } from '@application/event-dispatcher/events/user-registeration.event';
 
 @Injectable()
 export class RegisterOwnerUseCase {
@@ -11,10 +14,14 @@ export class RegisterOwnerUseCase {
     @Inject('UserRepository')
     private readonly userRepository: UserRepositoryInterface,
     private readonly userTransformer: UserTransformer,
+    @Inject('EventDispatcher')
+    private readonly eventDispatcher: EventDispatcherInterface,
   ) {}
 
   async execute(ownerRequestDto: OwnerRequestDto): Promise<OwnerResponseDto> {
     const owner = await this.userTransformer.toEntity(ownerRequestDto);
+
+    await this.eventDispatcher.dispatch(Events.USER_RESIGTERATION, new UserRegisterationEvent(owner));
 
     return OwnerResponseDto.createFromEntity((await this.userRepository.save(owner)) as Owner);
   }
