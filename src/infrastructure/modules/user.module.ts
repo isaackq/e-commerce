@@ -24,6 +24,7 @@ import { IsPasswordValidator } from '@infrastructure/validators/is-password.vali
 import { PositiontModule } from './position.module';
 import jwtConfig from 'config/jwt.config';
 import { GetUserDetailsUseCase } from '@application/user/usecase/get-user-details.usecase';
+import { SendWelcomeEmailListener } from '@application/event-dispatcher/listeners/send-welcome-email.listener';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { GetUserDetailsUseCase } from '@application/user/usecase/get-user-detail
     ResetPasswordUseCase,
     Connection,
     IsPasswordValidator,
+    SendWelcomeEmailListener,
     {
       provide: 'UserRepository',
       useClass: UserRepository,

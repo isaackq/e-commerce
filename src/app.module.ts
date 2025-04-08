@@ -15,6 +15,9 @@ import appConfig from 'config/app.config';
 import userPasswordConfig from 'config/user-password.config';
 import { RepositoryLocator } from '@infrastructure/locators/repository.locator';
 import jwtConfig from 'config/jwt.config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { EventDispatcher } from '@infrastructure/providers/event-dispatcher.provider';
+import { EmailProvider } from '@infrastructure/providers/send-email.provider';
 
 const ENV = process.env.NODE_ENV;
 
@@ -35,6 +38,7 @@ const ENV = process.env.NODE_ENV;
         };
       },
     }),
+    EventEmitterModule.forRoot({}),
     UserModule,
     MessageModule,
     MeetingModule,
@@ -60,8 +64,30 @@ const ENV = process.env.NODE_ENV;
         forbidNonWhitelisted: true,
       }),
     },
+    {
+      provide: 'EventDispatcher',
+      useClass: EventDispatcher,
+    },
+    {
+      provide: 'EmailProvider',
+      useClass: EmailProvider,
+    },
     RepositoryLocator,
+    {
+      provide: 'EmailProvider',
+      useClass: EmailProvider,
+    },
   ],
-  exports: [RepositoryLocator],
+  exports: [
+    RepositoryLocator,
+    {
+      provide: 'EmailProvider',
+      useClass: EmailProvider,
+    },
+    {
+      provide: 'EventDispatcher',
+      useClass: EventDispatcher,
+    },
+  ],
 })
 export class AppModule {}
