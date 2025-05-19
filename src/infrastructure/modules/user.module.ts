@@ -25,6 +25,7 @@ import { PositiontModule } from './position.module';
 import jwtConfig from 'config/jwt.config';
 import { GetUserDetailsUseCase } from '@application/user/usecase/get-user-details.usecase';
 import { SendWelcomeEmailListener } from '@application/event-dispatcher/listeners/send-welcome-email.listener';
+import { UpdatePasswordUsecase } from '@application/user/usecase/update-password.usecase';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { SendWelcomeEmailListener } from '@application/event-dispatcher/listener
     GetUserDetailsUseCase,
     ForgotPasswordUseCase,
     ResetPasswordUseCase,
+    UpdatePasswordUsecase,
     Connection,
     IsPasswordValidator,
     SendWelcomeEmailListener,
