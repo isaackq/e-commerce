@@ -23,6 +23,7 @@ import { UpdatePasswordRequestDto } from '@application/user/dtos/request/update-
 import { UpdatePasswordUsecase } from '@application/user/usecase/update-password.usecase';
 import { UpdatePasswordResponseDto } from '@application/user/dtos/response/update-password.response.dto';
 import { GetEmployeesUsecase } from '@application/user/usecase/get-employees.usecase';
+import { UserQueryDto } from '@application/user/dtos/request/query.dto';
 
 @Controller('users')
 export class UserController {
@@ -178,10 +179,8 @@ export class UserController {
   @Roles([RolesEnum.MANAGER, RolesEnum.OWNER])
   @Get('/employees')
   @Header('Content-Type', 'application/json')
-  async getEmployees(
-    @Query() paginatorRequestDto: PaginatorRequestDto,
-  ): Promise<PaginatorResponseDto<EmployeeResponseDto>> {
-    return await this.getEmployeesUsecase.execute(paginatorRequestDto);
+  async getEmployees(@Query() userQueryDto: UserQueryDto): Promise<PaginatorResponseDto<EmployeeResponseDto>> {
+    return await this.getEmployeesUsecase.execute(userQueryDto);
   }
 
   @ApiOperation({ summary: 'Get details on a specific user' })

@@ -2,11 +2,9 @@ import { PaginatorResponseDto } from '@application/dtos/response/paginator.respo
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
-import { UserResponseFactory } from '../factories/user-response.factory';
-import { UserResponseDto } from '../dtos/response/user.response.dto';
 import { EmployeeResponseDto } from '../dtos/response/employee.response.dto';
-import { PaginatorRequestDto } from '@application/dtos/request/paginator.request.dto';
 import { Employee } from '@domain/entities/user/Employee';
+import { UserQueryDto } from '../dtos/request/query.dto';
 
 @Injectable()
 export class GetEmployeesUsecase {
@@ -15,10 +13,12 @@ export class GetEmployeesUsecase {
     private readonly userRepository: UserRepositoryInterface,
   ) {}
 
-  async execute(paginatorRequestDto: PaginatorRequestDto): Promise<PaginatorResponseDto<EmployeeResponseDto>> {
-    const criteria = { roles: [RolesEnum.EMPLOYEE] };
-    const page = paginatorRequestDto.page;
-    const limit = paginatorRequestDto.limit;
+  async execute(userQueryDto: UserQueryDto): Promise<PaginatorResponseDto<EmployeeResponseDto>> {
+    let name = userQueryDto.name;
+    let [firstname, lastname] = name ? name.split(' ') : [];
+    const criteria = { roles: [RolesEnum.EMPLOYEE], firstname, lastname };
+    const page = userQueryDto.page;
+    const limit = userQueryDto.limit;
 
     const employees = await this.userRepository.findMany(criteria, page, limit);
 

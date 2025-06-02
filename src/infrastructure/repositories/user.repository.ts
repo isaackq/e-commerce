@@ -96,7 +96,7 @@ export class UserRepository implements UserRepositoryInterface {
     const params = {};
 
     if (criteria !== undefined) {
-      const { ids, roles } = criteria;
+      const { ids, roles, firstname, lastname } = criteria;
 
       if (ids) {
         params['_id'] = { $in: ids };
@@ -104,6 +104,14 @@ export class UserRepository implements UserRepositoryInterface {
 
       if (roles) {
         params['role'] = { $in: roles };
+      }
+
+      if (firstname) {
+        params['firstname'] = { $regex: new RegExp(firstname, 'i') };
+      }
+
+      if (lastname) {
+        params['lastname'] = { $regex: new RegExp(lastname, 'i') };
       }
     }
 
