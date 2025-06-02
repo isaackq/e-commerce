@@ -22,6 +22,7 @@ import { EntityByIdPipe } from '@infrastructure/pipes/entity-by-id.pipe';
 import { UpdatePasswordRequestDto } from '@application/user/dtos/request/update-password.request.dto';
 import { UpdatePasswordUsecase } from '@application/user/usecase/update-password.usecase';
 import { UpdatePasswordResponseDto } from '@application/user/dtos/response/update-password.response.dto';
+import { GetEmployeesUsecase } from '@application/user/usecase/get-employees.usecase';
 
 @Controller('users')
 export class UserController {
@@ -32,6 +33,7 @@ export class UserController {
     private readonly getUsersUsecase: GetUsersUseCase,
     private readonly getUserDetailsUsecase: GetUserDetailsUseCase,
     private readonly updatePasswordUsecase: UpdatePasswordUsecase,
+    private readonly getEmployeesUsecase: GetEmployeesUsecase,
   ) {}
 
   @ApiOperation({ summary: 'Add a new employee' })
@@ -131,18 +133,6 @@ export class UserController {
     return await this.getUserDetailsUsecase.execute(user);
   }
 
-  @ApiOperation({ summary: 'Get details on a specific user' })
-  @ApiResponse({ status: HttpStatus.OK, description: 'User details were retrieved successfully' })
-  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'You are not allowed to see the details of this user' })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'No user with this id exists' })
-  @ApiBearerAuth()
-  @Roles([RolesEnum.OWNER])
-  @Get('/:id')
-  @Header('Content-Type', 'application/json')
-  async getUserDetails(@Param('id', EntityByIdPipe('User')) user: User): Promise<UserResponseDto> {
-    return await this.getUserDetailsUsecase.execute(user);
-  }
-
   @ApiOperation({ summary: 'Update the password for the current user' })
   @ApiBody({ type: UpdatePasswordRequestDto })
   @ApiResponse({ status: HttpStatus.OK, description: 'Password updated successfully', type: UpdatePasswordResponseDto })
@@ -157,5 +147,52 @@ export class UserController {
     @Body(new ValidationPipe()) updatePasswordRequestDto: UpdatePasswordRequestDto,
   ) {
     return await this.updatePasswordUsecase.execute(updatePasswordRequestDto, user);
+  }
+
+  @ApiOperation({ summary: 'Get all employees' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Return a pagination list of all employees',
+    schema: {
+      allOf: [
+        {
+          properties: {
+            page: { type: 'number', example: 1 },
+            total: { type: 'number', example: 100 },
+            limit: { type: 'number', example: 10 },
+            data: {
+              type: 'array',
+              items: { $ref: getSchemaPath(UserResponseDto) },
+            },
+          },
+        },
+      ],
+    },
+  })
+  @ApiResponse({
+    status: HttpStatus.FORBIDDEN,
+    description: 'Access to the requested resource is forbidden',
+  })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiBearerAuth()
+  @Roles([RolesEnum.MANAGER, RolesEnum.OWNER])
+  @Get('/employees')
+  @Header('Content-Type', 'application/json')
+  async getEmployees(
+    @Query() paginatorRequestDto: PaginatorRequestDto,
+  ): Promise<PaginatorResponseDto<EmployeeResponseDto>> {
+    return await this.getEmployeesUsecase.execute(paginatorRequestDto);
+  }
+
+  @ApiOperation({ summary: 'Get details on a specific user' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'User details were retrieved successfully' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'You are not allowed to see the details of this user' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'No user with this id exists' })
+  @ApiBearerAuth()
+  @Roles([RolesEnum.OWNER])
+  @Get('/:id')
+  @Header('Content-Type', 'application/json')
+  async getUserDetails(@Param('id', EntityByIdPipe('User')) user: User): Promise<UserResponseDto> {
+    return await this.getUserDetailsUsecase.execute(user);
   }
 }

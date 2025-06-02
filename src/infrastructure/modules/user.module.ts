@@ -26,6 +26,7 @@ import jwtConfig from 'config/jwt.config';
 import { GetUserDetailsUseCase } from '@application/user/usecase/get-user-details.usecase';
 import { SendWelcomeEmailListener } from '@application/event-dispatcher/listeners/send-welcome-email.listener';
 import { UpdatePasswordUsecase } from '@application/user/usecase/update-password.usecase';
+import { GetEmployeesUsecase } from '@application/user/usecase/get-employees.usecase';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { UpdatePasswordUsecase } from '@application/user/usecase/update-password
     Connection,
     IsPasswordValidator,
     SendWelcomeEmailListener,
+    GetEmployeesUsecase,
     {
       provide: 'UserRepository',
       useClass: UserRepository,
