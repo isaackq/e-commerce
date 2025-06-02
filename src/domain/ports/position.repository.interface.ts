@@ -5,4 +5,5 @@ export interface PositionRepositoryInterface {
   findOne(position: string): Promise<Position | null>;
   findByIds(ids: string[]): Promise<Position[]>;
   findAll(): Promise<Position[]>;
+  update(id: string, position: Position): Promise<Position>;
 }

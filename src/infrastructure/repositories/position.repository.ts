@@ -35,9 +35,17 @@ export class PositionRepository implements PositionRepositoryInterface {
 
     return positionDocument.map((positionDocument) => PositionMapper.map(positionDocument));
   }
+
   async findAll(): Promise<Position[]> {
     const positionDocument = await this.positionModel.find().exec();
 
     return positionDocument.map((positionDocument) => PositionMapper.map(positionDocument));
+  }
+
+  //new update
+  async update(id: string, position: Position): Promise<Position> {
+    const positionDocument = await this.positionModel.findByIdAndUpdate(id, position, { new: true }).exec();
+
+    return PositionMapper.map(positionDocument);
   }
 }
