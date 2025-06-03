@@ -18,6 +18,7 @@ import jwtConfig from 'config/jwt.config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventDispatcher } from '@infrastructure/providers/event-dispatcher.provider';
 import { EmailProvider } from '@infrastructure/providers/send-email.provider';
+import { ClientModule } from '@infrastructure/modules/client.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -46,6 +47,7 @@ const ENV = process.env.NODE_ENV;
     RatingModule,
     ProjectModule,
     PositiontModule,
+    ClientModule,
   ],
   providers: [
     DiscoveryService,
