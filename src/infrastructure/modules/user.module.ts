@@ -27,6 +27,7 @@ import { GetUserDetailsUseCase } from '@application/user/usecase/get-user-detail
 import { SendWelcomeEmailListener } from '@application/event-dispatcher/listeners/send-welcome-email.listener';
 import { UpdatePasswordUsecase } from '@application/user/usecase/update-password.usecase';
 import { GetEmployeesUsecase } from '@application/user/usecase/get-employees.usecase';
+import { UpdateUserInfoUseCase } from '@application/user/usecase/update-user-info.usecase';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { GetEmployeesUsecase } from '@application/user/usecase/get-employees.use
     ForgotPasswordUseCase,
     ResetPasswordUseCase,
     UpdatePasswordUsecase,
+    UpdateUserInfoUseCase,
     Connection,
     IsPasswordValidator,
     SendWelcomeEmailListener,

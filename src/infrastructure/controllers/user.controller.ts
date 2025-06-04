@@ -7,7 +7,7 @@ import { RegisterEmployeeUseCase } from '@application/user/usecase/register-empl
 import { GetUsersUseCase } from '@application/user/usecase/get-users.usecase';
 import { User } from '@domain/entities/user/User';
 import { RolesEnum } from '@domain/enums/roles.enum';
-import { Body, Controller, Get, Header, HttpStatus, Param, Post, Query, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpStatus, Param, Patch, Post, Query, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, getSchemaPath } from '@nestjs/swagger';
 import { EmployeeRequestDto } from '@application/user/dtos/request/employee.request.dto';
 import { EmployeeResponseDto } from '@application/user/dtos/response/employee.response.dto';
@@ -24,6 +24,8 @@ import { UpdatePasswordUsecase } from '@application/user/usecase/update-password
 import { UpdatePasswordResponseDto } from '@application/user/dtos/response/update-password.response.dto';
 import { GetEmployeesUsecase } from '@application/user/usecase/get-employees.usecase';
 import { UserQueryDto } from '@application/user/dtos/request/query.dto';
+import { UpdateUserInfoDto } from '@application/user/dtos/request/update-user-info.dto';
+import { UpdateUserInfoUseCase } from '@application/user/usecase/update-user-info.usecase';
 
 @Controller('users')
 export class UserController {
@@ -35,6 +37,7 @@ export class UserController {
     private readonly getUserDetailsUsecase: GetUserDetailsUseCase,
     private readonly updatePasswordUsecase: UpdatePasswordUsecase,
     private readonly getEmployeesUsecase: GetEmployeesUsecase,
+    private readonly updateUserInfoUseCase: UpdateUserInfoUseCase,
   ) {}
 
   @ApiOperation({ summary: 'Add a new employee' })
@@ -193,5 +196,21 @@ export class UserController {
   @Header('Content-Type', 'application/json')
   async getUserDetails(@Param('id', EntityByIdPipe('User')) user: User): Promise<UserResponseDto> {
     return await this.getUserDetailsUsecase.execute(user);
+  }
+
+  @ApiOperation({ summary: 'Update the information for the current user' })
+  @ApiBody({ type: UpdateUserInfoDto })
+  @ApiResponse({ status: HttpStatus.OK, description: 'User information updated successfully', type: UserResponseDto })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'No changes detected' })
+  @ApiResponse({ status: HttpStatus.CONFLICT, description: 'Conflict occurred while updating user information' })
+  @ApiBearerAuth()
+  @Roles([RolesEnum.EMPLOYEE, RolesEnum.MANAGER, RolesEnum.OWNER])
+  @Patch('/update-information')
+  @Header('Content-Type', 'application/json')
+  async updateUserInformation(
+    @Body(new ValidationPipe()) updateUserInfoDto: UpdateUserInfoDto,
+    @CurrentUser() user: User,
+  ) {
+    return await this.updateUserInfoUseCase.execute(updateUserInfoDto, user);
   }
 }

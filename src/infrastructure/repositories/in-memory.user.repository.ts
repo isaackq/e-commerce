@@ -46,4 +46,21 @@ export class InMemoryUserRepository implements UserRepositoryInterface {
   async resetPassword(id: string, newPassword: string): Promise<User> {
     return this.users[0];
   }
+
+  async updateUserInfo(id: string, updatedUser: User, hasEmailOrPhoneUpdate?: boolean) {
+    const index = this.users.findIndex((u) => u.id === id);
+    if (index === -1) {
+      throw new Error('User not found');
+    }
+    if (hasEmailOrPhoneUpdate) {
+      if (this.users.some((u, i) => i !== index && u.email === updatedUser.email)) {
+        throw new Error('A user with the same email already exists');
+      }
+      if (this.users.some((u, i) => i !== index && u.mobileNumber === updatedUser.mobileNumber)) {
+        throw new Error('A user with the same mobile Number already exists');
+      }
+    }
+    this.users[index] = updatedUser;
+    return this.users[index];
+  }
 }

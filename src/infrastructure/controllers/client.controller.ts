@@ -1,6 +1,6 @@
 import { ClientRequestDto } from '@application/client/dtos/client-request.dto';
 import { CreateClientUseCase } from '@application/client/usecases/create-client.usecase';
-import { Roles } from '@application/user/decorators/roles.decorator';
+import { Roles } from '@infrastructure/decorators/roles.decorator';
 import { Client } from '@domain/entities/Client';
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { Body, Controller, Header, HttpStatus, Post, ValidationPipe } from '@nestjs/common';

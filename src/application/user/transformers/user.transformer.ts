@@ -9,6 +9,7 @@ import { OwnerRequestDto } from '../dtos/request/owner.request.dto';
 import { PositionRepositoryInterface } from '@domain/ports/position.repository.interface';
 import { Manager } from '@domain/entities/user/Manager';
 import { RolesEnum } from '@domain/enums/roles.enum';
+import { UpdateUserInfoDto } from '../dtos/request/update-user-info.dto';
 
 @Injectable()
 export class UserTransformer {
@@ -54,6 +55,16 @@ export class UserTransformer {
       user.contractEndDate = userRequestDto.contractEndDate;
     }
 
+    return user;
+  }
+
+  async updateEntity(updateUserInfoDto: UpdateUserInfoDto, user: User, date?: Birthday): Promise<User> {
+    if (updateUserInfoDto.firstname) user.firstname = updateUserInfoDto.firstname;
+    if (updateUserInfoDto.lastname) user.lastname = updateUserInfoDto.lastname;
+    if (updateUserInfoDto.email) user.email = updateUserInfoDto.email;
+    if (updateUserInfoDto.birthday) user.birthday = date;
+    if (updateUserInfoDto.mobileNumber) user.mobileNumber = updateUserInfoDto.mobileNumber;
+    if (updateUserInfoDto.country) user.country = updateUserInfoDto.country;
     return user;
   }
 }

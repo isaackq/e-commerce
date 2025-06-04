@@ -1,3 +1,4 @@
+import { User } from '@domain/entities/user/User';
 import { RolesEnum } from '@domain/enums/roles.enum';
 import { Birthday } from '@domain/objectsValues/Birthday';
 import { ApiProperty } from '@nestjs/swagger';
@@ -95,5 +96,20 @@ export class UserResponseDto {
     this.country = country;
     this.city = city;
     this.nationality = nationality;
+  }
+
+  public static createFromEntity(user: User): UserResponseDto {
+    return new UserResponseDto(
+      user.id,
+      user.firstname,
+      user.lastname,
+      user.email,
+      user.birthday,
+      user.mobileNumber,
+      user.getRole(),
+      user.country,
+      user.city,
+      user.nationality,
+    );
   }
 }
