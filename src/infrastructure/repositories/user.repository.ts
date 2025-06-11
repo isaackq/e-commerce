@@ -118,34 +118,30 @@ export class UserRepository implements UserRepositoryInterface {
     return params;
   }
 
-  async updateUserInfo(userId: string, updateUser: User, hasEmailOrPhoneUpdate?: boolean): Promise<User> {
-    const existingUser = await this.userModel.findById(userId).exec();
-
-    if (!existingUser) {
-      throw new ConflictException('The user does not exist.');
-    }
-
+  async updateUserInfo(updateUser: User, hasEmailOrPhoneUpdate?: boolean): Promise<User> {
     if (hasEmailOrPhoneUpdate) {
       const user = await this.userModel
         .find({
           $or: [
-            { email: updateUser.email, _id: { $ne: userId } },
-            { mobileNumber: updateUser.mobileNumber, _id: { $ne: userId } },
+            { email: updateUser.email, _id: { $ne: updateUser.id } },
+            { mobileNumber: updateUser.mobileNumber, _id: { $ne: updateUser.id } },
           ],
         })
         .exec();
 
-      if (user.length > 0) {
+      if (user.length == 1) {
         throw new ConflictException('A user with the same email and/or mobileNumber already exists.');
       }
     }
 
-    existingUser.set({
-      ...updateUser,
-      birthday: updateUser.birthday.value,
-    });
-
-    const userDocument = await existingUser.save();
+    const userDocument = await this.userModel.findByIdAndUpdate(
+      updateUser.id,
+      {
+        ...updateUser,
+        birthday: updateUser.birthday.value,
+      },
+      { new: true },
+    );
 
     return UserMapper.map(userDocument);
   }

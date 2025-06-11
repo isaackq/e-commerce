@@ -10,5 +10,7 @@ export class UpdateUserInfoDto extends PartialType(
     'birthday',
     'mobileNumber',
     'country',
+    'city',
+    'nationality',
   ] as const),
 ) {}

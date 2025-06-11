@@ -58,13 +58,15 @@ export class UserTransformer {
     return user;
   }
 
-  async updateEntity(updateUserInfoDto: UpdateUserInfoDto, user: User, date?: Birthday): Promise<User> {
+  updateEntity(updateUserInfoDto: UpdateUserInfoDto, user: User, date?: Birthday): User {
     if (updateUserInfoDto.firstname) user.firstname = updateUserInfoDto.firstname;
     if (updateUserInfoDto.lastname) user.lastname = updateUserInfoDto.lastname;
     if (updateUserInfoDto.email) user.email = updateUserInfoDto.email;
     if (updateUserInfoDto.birthday) user.birthday = date;
     if (updateUserInfoDto.mobileNumber) user.mobileNumber = updateUserInfoDto.mobileNumber;
     if (updateUserInfoDto.country) user.country = updateUserInfoDto.country;
+    if (updateUserInfoDto.city) user.city = updateUserInfoDto.city;
+    if (updateUserInfoDto.nationality) user.nationality = updateUserInfoDto.nationality;
     return user;
   }
 }

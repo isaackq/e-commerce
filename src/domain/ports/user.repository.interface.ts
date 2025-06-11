@@ -15,5 +15,5 @@ export interface UserRepositoryInterface {
   findMany(criteria?: Partial<UserCriteria>, page?: number, limit?: number): Promise<User[]>;
   count(criteria?: Partial<UserCriteria>): Promise<number>;
   resetPassword(id: string, newPassword: string): Promise<User>;
-  updateUserInfo(id: string, updateUser: User, hasEmailOrPhoneUpdate?: boolean): Promise<User>;
+  updateUserInfo(updateUser: User, hasEmailOrPhoneUpdate?: boolean): Promise<User>;
 }

@@ -47,8 +47,8 @@ export class InMemoryUserRepository implements UserRepositoryInterface {
     return this.users[0];
   }
 
-  async updateUserInfo(id: string, updatedUser: User, hasEmailOrPhoneUpdate?: boolean) {
-    const index = this.users.findIndex((u) => u.id === id);
+  async updateUserInfo(updatedUser: User, hasEmailOrPhoneUpdate?: boolean) {
+    const index = this.users.findIndex((u) => u.id === updatedUser.id);
     if (index === -1) {
       throw new Error('User not found');
     }

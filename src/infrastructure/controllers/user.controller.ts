@@ -205,7 +205,7 @@ export class UserController {
   @ApiResponse({ status: HttpStatus.CONFLICT, description: 'Conflict occurred while updating user information' })
   @ApiBearerAuth()
   @Roles([RolesEnum.EMPLOYEE, RolesEnum.MANAGER, RolesEnum.OWNER])
-  @Patch('/update-information')
+  @Patch('/me')
   @Header('Content-Type', 'application/json')
   async updateUserInformation(
     @Body(new ValidationPipe()) updateUserInfoDto: UpdateUserInfoDto,

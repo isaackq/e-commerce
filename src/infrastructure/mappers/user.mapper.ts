@@ -22,6 +22,8 @@ export class UserMapper {
     user.birthday = new Birthday(userDocument.birthday);
     user.mobileNumber = userDocument.mobileNumber;
     user.country = userDocument.country;
+    user.city = userDocument.city;
+    user.nationality = userDocument.nationality;
     user.email = userDocument.email;
 
     if (user instanceof Employee) {
