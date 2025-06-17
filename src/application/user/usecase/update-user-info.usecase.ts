@@ -22,10 +22,7 @@ export class UpdateUserInfoUseCase {
 
   async execute(updateUserInfoDto: UpdateUserInfoDto, user: User) {
     const { hasEmailOrPhoneUpdate, date } = this.checkAtriputes(updateUserInfoDto, user);
-    if (!date) {
-      const updatedUser = await this.userTransformer.updateEntity(updateUserInfoDto, user);
-      return await this.updateViaRole(updatedUser, hasEmailOrPhoneUpdate);
-    }
+
     const updatedUser = await this.userTransformer.updateEntity(updateUserInfoDto, user, date);
     return await this.updateViaRole(updatedUser, hasEmailOrPhoneUpdate);
   }
