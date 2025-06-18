@@ -1,18 +1,22 @@
-import { Employee } from '@domain/entities/user/Employee';
-import { Manager } from '@domain/entities/user/Manager';
-import { Owner } from '@domain/entities/user/Owner';
-import { User } from '@domain/entities/user/User';
-import { RolesEnum } from '@domain/enums/roles.enum';
+import { Admin } from '../entities/User/Admin';
+import { Customer } from '../entities/User/Customer';
+import { Delivery } from '../entities/User/Delivery';
+import { Seller } from '../entities/User/Seller';
+import { RolesEnum } from '../enums/role.enum';
 
-export default class UserFactory {
-  static create(role: RolesEnum): User {
-    switch (role) {
-      case RolesEnum.EMPLOYEE:
-        return new Employee();
-      case RolesEnum.MANAGER:
-        return new Manager();
-      case RolesEnum.OWNER:
-        return new Owner();
+export default class userFactory {
+  static create(role: RolesEnum) {
+    if (role == RolesEnum.Admin) {
+      return new Admin();
+    }
+    if (role == RolesEnum.Customer) {
+      return new Customer();
+    }
+    if (role == RolesEnum.Delivery) {
+      return new Delivery();
+    }
+    if (role == RolesEnum.Seller) {
+      return new Seller();
     }
   }
 }
