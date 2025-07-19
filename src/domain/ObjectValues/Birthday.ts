@@ -2,8 +2,8 @@ export class Birthday {
   private _value: Date;
 
   constructor(value: Date) {
-    if (!this.isAgeValid(value))
-      throw new Error('Age must be greater than 16 years.');
+    if (!this.isAgeValid(value)) throw new Error('Age must be greater than 16 years.');
+    this._value = value;
   }
 
   private isAgeValid(date: Date): boolean {

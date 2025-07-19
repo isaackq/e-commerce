@@ -1,7 +1,7 @@
-import { Product } from './Product';
-import { Customer } from './User/Customer';
+import { CartItem } from './interfaces/cart-item.interface';
 
 export class Cart {
   id?: string;
-  Products: Product[];
+  items: CartItem[];
+  totalPrice: number;
 }

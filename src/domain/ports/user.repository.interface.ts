@@ -1,10 +1,12 @@
-import { Product } from '../entities/Product';
+// import { Product } from '../entities/Product';
 import { User } from '../entities/User/User';
 
 export interface UserRepositoryInterface {
   save(user: User): Promise<User>;
-  findOne(id: string): Promise<User | null>;
+  createCustomer(user: User): Promise<User>;
   findOneByEmail(email: string): Promise<User | null>;
-  addToCart(Product: Product | Product[], userId: string); //cuurent  user
-  addToFavorites(Product: Product | Product[], userId: string); //cuurent  user
+  findOne(id: string): Promise<User | null>;
+  // findOneByEmail(email: string): Promise<User | null>;
+  // addToCart(Product: Product | Product[], userId: string); //cuurent  user
+  // addToFavorites(Product: Product | Product[], userId: string); //cuurent  user
 }
