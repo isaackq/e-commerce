@@ -34,7 +34,6 @@ export class TokenGuard implements CanActivate {
       if (!user) {
         throw new UnauthorizedException();
       }
-      console.log('user : ', user);
 
       request.user = user;
 

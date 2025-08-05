@@ -1,5 +1,4 @@
 import { HashingProviderInterface } from '@application/user/auth/hashing.provider.interface';
-// import { Seller } from '@domain/entities/User/Seller';
 import { User } from '@domain/entities/User/User';
 import { UserRepositoryInterface } from '@domain/ports/user.repository.interface';
 import { UserMapper } from '@infrastructure/mappers/user.maper';
@@ -101,6 +100,12 @@ export class userRepository implements UserRepositoryInterface {
     if (!userDocument) {
       return null;
     }
+    // let populatFeilds;
+    // if (userDocument.role === RolesEnum.Customer) {
+    //   populatFeilds = 'cart favorites';
+    // }
+    // console.log(populatFeilds);
+
     return UserMapper.map(userDocument);
   }
   //   addToCart(Product: Product | Product[], userId: string); //cuurent  user

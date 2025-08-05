@@ -1,3 +1,4 @@
+import { TargetCustomerResolver } from '@application/user/providers/target-customer-resolver.provider';
 import { UserTransformer } from '@application/user/transformer/user.transformer';
 import { LoginUseCase } from '@application/user/usecase/login.usecase';
 import { RegisterAdminUsecase } from '@application/user/usecase/register-admin.usecase';
@@ -53,12 +54,14 @@ import { MongooseModule } from '@nestjs/mongoose';
     LoginUseCase,
     RegesterSellerUsecase,
     RegisterAdminUsecase,
+    TargetCustomerResolver,
   ],
   exports: [
     {
       provide: 'userRepository',
       useClass: userRepository,
     },
+    TargetCustomerResolver,
   ],
   controllers: [UserController, AuthController],
 })

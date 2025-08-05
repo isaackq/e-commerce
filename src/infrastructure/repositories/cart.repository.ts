@@ -10,8 +10,8 @@ import { Model } from 'mongoose';
 export class CartRepository implements CartRepositoryInterface {
   constructor(@InjectModel(CartSchema.name) private readonly cartModel: Model<CartSchema>) {}
 
-  async addProductToCart(cart: Cart): Promise<Cart> {
-    const cartDocumet = await this.cartModel.findByIdAndUpdate(
+  async saveCart(cart: Cart): Promise<Cart> {
+    const cartDocument = await this.cartModel.findByIdAndUpdate(
       cart.id,
       {
         ...cart,
@@ -27,7 +27,7 @@ export class CartRepository implements CartRepositoryInterface {
       { new: true },
     );
 
-    return CartMapper.map(await cartDocumet.populate('items.product'));
+    return CartMapper.map(await cartDocument.populate('items.product'));
   }
 
   async findOne(id: string): Promise<Cart> {
@@ -37,5 +37,10 @@ export class CartRepository implements CartRepositoryInterface {
       return null;
     }
     return CartMapper.map(await cartDocumnet.populate('items.product'));
+  }
+
+  async clearCart(id: string): Promise<Cart> {
+    const cartDocument = await this.cartModel.findByIdAndUpdate(id, { items: [], totalPrice: 0 }, { new: true });
+    return CartMapper.map(cartDocument);
   }
 }

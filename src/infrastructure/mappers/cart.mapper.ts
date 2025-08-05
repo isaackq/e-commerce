@@ -9,7 +9,6 @@ export class CartMapper {
       cart.id = cartDocument;
       return cart;
     }
-    console.log(cartDocument.items);
 
     cart.id = cartDocument.id;
     cart.items = cartDocument.items.map((item) => {
